@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Pokemon Catchers Catalogue</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+</resources>
