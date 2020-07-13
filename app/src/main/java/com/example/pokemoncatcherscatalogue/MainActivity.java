@@ -2,12 +2,17 @@ package com.example.pokemoncatcherscatalogue;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import org.w3c.dom.Text;
 
@@ -71,5 +76,23 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Fields cannot be blank", Toast.LENGTH_SHORT).show();
             return;
         }
+        ParseUser.logInInBackground(username, password, new LogInCallback() {
+            @Override
+            public void done(ParseUser user, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with login", e);
+                    Toast.makeText(MainActivity.this, "Issue with login", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                // TODO navigate to the main activity if the user has signed in properly
+                goHomeActivity();
+                Toast.makeText(MainActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void goHomeActivity() {
+        Intent i = new Intent(this, HomeActivity.class);
+        startActivity(i);
     }
 }
