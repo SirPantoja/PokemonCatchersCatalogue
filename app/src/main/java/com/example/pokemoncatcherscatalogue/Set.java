@@ -29,4 +29,20 @@ public class Set {
     public int getTotalCards() {
         return totalCards;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public void setSymbolUrl(String symbolUrl) {
+        this.symbolUrl = symbolUrl;
+    }
+
+    public void setTotalCards(int totalCards) {
+        this.totalCards = totalCards;
+    }
 }

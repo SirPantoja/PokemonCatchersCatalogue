@@ -10,12 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
     private List<Set> sets;
-
+    private Context context;
     public SetAdapter (List<Set> sets) {
         this.sets = sets;
     }
@@ -23,7 +25,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     @NonNull
     @Override
     public SetAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
@@ -45,6 +47,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
         // Put in the data
         tvSetName.setText(set.getName());
+        Glide.with(context).load(set.getLogoUrl()).into(ivLogo);
     }
 
     @Override
