@@ -1,16 +1,18 @@
-package com.example.pokemoncatcherscatalogue;
+package models;
 
 public class Set {
 
     private String name;
     private String logoUrl;
     private String symbolUrl;
+    private String code;
     private int totalCards;
 
-    public Set(String name, String logoUrl, String symbolUrl, int totalCards) {
+    public Set(String name, String logoUrl, String symbolUrl, String code, int totalCards) {
         this.name = name;
         this.logoUrl = logoUrl;
         this.symbolUrl = symbolUrl;
+        this.code = code;
         this.totalCards = totalCards;
     }
 
@@ -24,6 +26,10 @@ public class Set {
 
     public String getSymbolUrl() {
         return symbolUrl;
+    }
+
+    public String getSetCode() {
+        return code;
     }
 
     public int getTotalCards() {

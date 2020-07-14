@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+import fragments.FriendsFragment;
 import fragments.SetFragment;
 
 public class HomeActivity extends AppCompatActivity {
@@ -75,6 +76,9 @@ public class HomeActivity extends AppCompatActivity {
         Fragment fragment = null;
         Class fragmentClass;
         switch(menuItem.getItemId()) {
+            case R.id.nav_second_fragment:
+                fragmentClass = FriendsFragment.class;
+                break;
             case R.id.nav_first_fragment:
                 fragmentClass = SetFragment.class;
                 break;

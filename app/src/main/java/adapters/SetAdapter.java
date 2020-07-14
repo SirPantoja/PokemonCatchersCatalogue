@@ -1,18 +1,24 @@
-package com.example.pokemoncatcherscatalogue;
+package adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.pokemoncatcherscatalogue.R;
+import com.example.pokemoncatcherscatalogue.SingleSetActivity;
 
 import java.util.List;
+
+import models.Set;
 
 public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
@@ -39,15 +45,27 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull SetAdapter.ViewHolder holder, int position) {
         // Get the data based off the position
-        Set set = sets.get(position);
+        final Set set = sets.get(position);
 
         // Set the item views based on the given data
         ImageView ivLogo = holder.ivLogo;
         TextView tvSetName = holder.tvSetName;
+        RelativeLayout rlSet = holder.rlSet;
 
         // Put in the data
         tvSetName.setText(set.getName());
         Glide.with(context).load(set.getLogoUrl()).into(ivLogo);
+
+        // Set up the on click listener for rlSet
+        rlSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Start an intent to go to the SingleSetActivity
+                Intent intent = new Intent(context, SingleSetActivity.class);
+                intent.putExtra("code", set.getSetCode());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -59,6 +77,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
         public ImageView ivLogo;
         public TextView tvSetName;
+        public RelativeLayout rlSet;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +85,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
             // Link up views
             ivLogo = itemView.findViewById(R.id.ivLogo);
             tvSetName = itemView.findViewById(R.id.tvSetName);
+            rlSet = itemView.findViewById(R.id.rlSet);
         }
     }
 }

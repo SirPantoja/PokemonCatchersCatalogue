@@ -1,5 +1,6 @@
 package fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,8 +17,8 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.pokemoncatcherscatalogue.R;
-import com.example.pokemoncatcherscatalogue.Set;
-import com.example.pokemoncatcherscatalogue.SetAdapter;
+import models.Set;
+import adapters.SetAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +35,7 @@ public class SetFragment extends Fragment {
     private RecyclerView rvSets;
     protected SetAdapter adapter;
     protected List<Set> sets;
+    private Context context;
 
     public SetFragment() {
         // Required empty public constructor
@@ -42,6 +44,7 @@ public class SetFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        context = getContext();
 
         // Set up the Recycler View
         rvSets = view.findViewById(R.id.rvSets);
@@ -79,7 +82,8 @@ public class SetFragment extends Fragment {
                     try {
                         // Populate the set object
                         Set set = new Set(jsonArray.getJSONObject(i).getString("name"), jsonArray.getJSONObject(i).getString("logoUrl"),
-                                jsonArray.getJSONObject(i).getString("symbolUrl"), jsonArray.getJSONObject(i).getInt("totalCards"));
+                                jsonArray.getJSONObject(i).getString("symbolUrl"), jsonArray.getJSONObject(i).getString("code"),
+                                jsonArray.getJSONObject(i).getInt("totalCards"));
                         // Add the set to sets
                         sets.add(set);
                     } catch (JSONException e) {
