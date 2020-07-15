@@ -5,6 +5,7 @@ import org.parceler.Parcel;
 @Parcel
 public class Card implements Comparable<Card> {
 
+    // TODO change these to public and change their references
     private String name;
     private String id;          // Unique identifier for each card
     private String url;

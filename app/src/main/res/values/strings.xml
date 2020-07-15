@@ -11,4 +11,6 @@
     <string name="image_of_card">Image of card</string>
     <string name="toggleButton">ToggleButton</string>
     <string name="edit_mode">Edit Mode</string>
+    <string name="textview">TextView</string>
+    <string name="profile_picture">Profile Picture</string>
 </resources>
