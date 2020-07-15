@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
@@ -30,6 +32,8 @@ public class SingleSetActivity extends AppCompatActivity {
     private RecyclerView rvCards;
     private ArrayList<Card> cards;
     private CardAdapter adapter;
+    private ToggleButton btnEditToggle;
+    public static boolean isChecked = false;
 
 
     @Override
@@ -43,6 +47,15 @@ public class SingleSetActivity extends AppCompatActivity {
 
         // Link up views
         rvCards = findViewById(R.id.rvCards);
+        btnEditToggle = findViewById(R.id.btnEditToggle);
+
+        // Set on check listener for the toggle button
+        btnEditToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                SingleSetActivity.isChecked = isChecked;            // Perhaps not the most idiomatic, TODO change this up to be better
+            }
+        });
 
         // Initialize cards
         cards = new ArrayList<>();

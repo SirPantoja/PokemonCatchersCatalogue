@@ -9,4 +9,6 @@
     <string name="image_of_logo">Image of logo</string>
     <string name="picture_of_card">Picture of card</string>
     <string name="image_of_card">Image of card</string>
+    <string name="toggleButton">ToggleButton</string>
+    <string name="edit_mode">Edit Mode</string>
 </resources>

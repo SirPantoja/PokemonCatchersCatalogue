@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.pokemoncatcherscatalogue.CardDetailsActivity;
 import com.example.pokemoncatcherscatalogue.R;
+import com.example.pokemoncatcherscatalogue.SingleSetActivity;
 
 import org.parceler.Parcels;
 
@@ -59,10 +61,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         ivCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Use an intent to go the CardDetailsActivity
-                Intent intent = new Intent(context, CardDetailsActivity.class);
-                intent.putExtra("card", Parcels.wrap(card));
-                context.startActivity(intent);
+                if (SingleSetActivity.isChecked) {
+                    // TODO Increment the card count for this card
+                    Toast.makeText(context, "Incremented", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Use an intent to go the CardDetailsActivity since we are not in edit mode
+                    Intent intent = new Intent(context, CardDetailsActivity.class);
+                    intent.putExtra("card", Parcels.wrap(card));
+                    context.startActivity(intent);
+                }
             }
         });
     }
