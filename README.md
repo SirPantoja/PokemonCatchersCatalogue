@@ -11,7 +11,7 @@ Original App Design Project - README Template
 
 ## Overview
 ### Description
-A platform for pokemon tcg collectors and competitors to keep a record of their cards, create decks, trade, and create wishlists.
+A platform for pokemon tcg collectors and competitors to keep a record of their cards, create decks, trade, and create wishlists. The Pokemon Trading Card Game (PTCG) releases cards in sets, that is, series of about 100 cards that follow a similar theme. Here we organize our app around these sets.
 
 ### App Evaluation
 [Evaluation of your app across the following attributes]
@@ -28,20 +28,26 @@ A platform for pokemon tcg collectors and competitors to keep a record of their 
 
 **Required Must-have Stories**
 
-* Must allow users to have accounts and login
+* Allow users to have accounts
+* Login with username and password
+* Logout with username and password
+* Use Parse as a backend
 * Must use an API to get PTCG data into the app
 * Must allow users to have personalized collection
-* Must divy up app by sets
-* Must allow intercommunication among users (trades, viewing)
+* Organize cards according to which set they belong to
 * Must use camera to allow users to take pictures of cards
-* ...
+* Have a card details screen
 
 **Optional Nice-to-have Stories**
 
+* Have a friends list
+* Allows friends to trade
+* Allows friends to view each others collections
+* Use FB login
 * Interact with ebay to find current listings
 * Implement a twitter feed
 * Deck builder mode
-* Card battler mode (extreme stretch)
+* Card battler mode
 * Contain information about the latest sets
 * Approximate value of certain sets or collections for a user
 * ...
@@ -59,7 +65,6 @@ A platform for pokemon tcg collectors and competitors to keep a record of their 
    * Uploaded with API for TCG data
    * Allow the camera to document individual cards
 * Friends list
-   * Chat function enabled
    * Allows user to view others' collections
    * Allows user to offer trades
 
