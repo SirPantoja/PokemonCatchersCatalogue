@@ -67,7 +67,6 @@ public class SingleSetActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "onSuccess");
-                Log.d(TAG, json.jsonObject.toString());
                 JSONArray jsonArray = null;
                 try {
                     jsonArray = json.jsonObject.getJSONArray("cards");
@@ -75,7 +74,6 @@ public class SingleSetActivity extends AppCompatActivity {
                     e.printStackTrace();
                     return;
                 }
-                Log.i(TAG, jsonArray.toString());
                 // Set the values in card through a loop
                 for (int i = 0 ; i < jsonArray.length(); i++) {
                     Card card;
