@@ -88,11 +88,7 @@ A platform for pokemon tcg collectors and competitors to keep a record of their 
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
-
-### [BONUS] Digital Wireframes & Mockups
-
-### [BONUS] Interactive Prototype
+<img src="Wireframe-1.png" width=600>
 
 ## Schema 
 [This section will be completed in Unit 9]
