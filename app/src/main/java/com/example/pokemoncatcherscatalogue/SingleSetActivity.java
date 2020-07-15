@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import adapters.CardAdapter;
 import models.Card;
@@ -86,6 +87,9 @@ public class SingleSetActivity extends AppCompatActivity {
                     }
                     cards.add(card);
                 }
+                // We want to sort the cards
+                Collections.sort(cards);
+                // Notify adapter of card update
                 adapter.notifyDataSetChanged();
             }
 

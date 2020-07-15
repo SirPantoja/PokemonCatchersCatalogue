@@ -1,6 +1,6 @@
 package models;
 
-public class Card {
+public class Card implements Comparable<Card> {
 
     private String name;
     private String id;          // Unique identifier for each card
@@ -28,5 +28,10 @@ public class Card {
 
     public int getNumber() {
         return number;
+    }
+
+    @Override
+    public int compareTo(Card card) {
+        return this.getNumber() - card.getNumber();
     }
 }
