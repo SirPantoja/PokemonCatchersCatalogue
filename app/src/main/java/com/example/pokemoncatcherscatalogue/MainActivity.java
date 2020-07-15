@@ -30,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Persist the user across resets
+        if (ParseUser.getCurrentUser() != null) {
+            goHomeActivity();
+        }
+
         // Link up views
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);

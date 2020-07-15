@@ -13,4 +13,7 @@
     <string name="edit_mode">Edit Mode</string>
     <string name="textview">TextView</string>
     <string name="profile_picture">Profile Picture</string>
+    <string name="sets">Sets</string>
+    <string name="friends">Friends</string>
+    <string name="profile">Profile</string>
 </resources>
