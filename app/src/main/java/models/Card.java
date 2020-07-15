@@ -4,11 +4,13 @@ public class Card {
 
     private String name;
     private String id;          // Unique identifier for each card
+    private String url;
     private int number;         // Number of card within the set
 
-    public Card (String name, String id, int number) {
+    public Card (String name, String id, String url, int number) {
         this.name = name;
         this.id = id;
+        this.url = url;
         this.number = number;
     }
 
@@ -18,6 +20,10 @@ public class Card {
 
     public String getId() {
         return id;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public int getNumber() {
