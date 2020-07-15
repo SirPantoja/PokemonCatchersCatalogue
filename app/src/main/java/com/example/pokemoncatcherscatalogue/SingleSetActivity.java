@@ -89,7 +89,7 @@ public class SingleSetActivity extends AppCompatActivity {
                 }
                 // We want to sort the cards
                 Collections.sort(cards);
-                // Notify adapter of card update
+                // Notify adapter
                 adapter.notifyDataSetChanged();
             }
 

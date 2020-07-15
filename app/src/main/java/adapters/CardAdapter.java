@@ -1,6 +1,7 @@
 package adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.pokemoncatcherscatalogue.CardDetailsActivity;
 import com.example.pokemoncatcherscatalogue.R;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -43,13 +47,24 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CardAdapter.ViewHolder holder, int position) {
         // Get the right card based off position
-        Card card = cards.get(position);
+        final Card card = cards.get(position);
 
         // Set the item views based off card
         TextView tvCardName = holder.tvCardName;
         tvCardName.setText(card.getName());
         ImageView ivCard = holder.ivCard;
         Glide.with(context).load(card.getUrl()).into(ivCard);
+
+        // Set on click listener for ivCard
+        ivCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Use an intent to go the CardDetailsActivity
+                Intent intent = new Intent(context, CardDetailsActivity.class);
+                intent.putExtra("card", Parcels.wrap(card));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
