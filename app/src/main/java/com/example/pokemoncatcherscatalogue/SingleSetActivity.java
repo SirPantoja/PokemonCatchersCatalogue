@@ -117,8 +117,7 @@ public class SingleSetActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.e(TAG, "onFailure, Error getting cards");
-                // TODO throw throwable lol
+                Log.e(TAG, "onFailure, Error getting cards", throwable);
             }
         });
     }
