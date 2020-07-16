@@ -50,6 +50,7 @@ A platform for pokemon tcg collectors and competitors to keep a record of their 
 * Card battler mode
 * Contain information about the latest sets
 * Approximate value of certain sets or collections for a user
+* Add searches and filters
 * ...
 
 ### 2. Screen Archetypes
