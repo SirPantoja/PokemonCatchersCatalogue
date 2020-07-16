@@ -126,4 +126,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+        Toast.makeText(this,"There is no back action",Toast.LENGTH_LONG).show();
+    }
 }

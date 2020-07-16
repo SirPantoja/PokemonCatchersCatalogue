@@ -2,6 +2,7 @@ package adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.pokemoncatcherscatalogue.CardDetailsActivity;
 import com.example.pokemoncatcherscatalogue.R;
 import com.example.pokemoncatcherscatalogue.SingleSetActivity;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -25,6 +27,7 @@ import models.Card;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
+    public static final String TAG = "CardAdapter";
     private List<Card> cards;
     private Context context;
 
@@ -64,6 +67,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                 if (SingleSetActivity.isChecked) {
                     // TODO Increment the card count for this card
                     Toast.makeText(context, "Incremented", Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "username: " + ParseUser.getCurrentUser().getUsername() + " card: " + card.getName());
                 } else {
                     // Use an intent to go the CardDetailsActivity since we are not in edit mode
                     Intent intent = new Intent(context, CardDetailsActivity.class);

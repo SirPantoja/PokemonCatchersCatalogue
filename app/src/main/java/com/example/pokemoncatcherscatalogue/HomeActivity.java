@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 
 import fragments.FriendsFragment;
+import fragments.ProfileFragment;
 import fragments.SetFragment;
 
 public class HomeActivity extends AppCompatActivity {
@@ -83,7 +84,7 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentClass = SetFragment.class;
                 break;
             default:
-                fragmentClass = SetFragment.class;
+                fragmentClass = ProfileFragment.class;
         }
 
         try {

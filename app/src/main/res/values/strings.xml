@@ -16,4 +16,5 @@
     <string name="sets">Sets</string>
     <string name="friends">Friends</string>
     <string name="profile">Profile</string>
+    <string name="logout">LOGOUT</string>
 </resources>
