@@ -94,23 +94,45 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                 if (e == null) {
                     // Access the array of results here
                     if (itemList.isEmpty()) {
+                        // This means this card doesn't already exist so we need to create it
                         ParseCard parseCard = new ParseCard(card.setName, card.getNumber(), ParseUser.getCurrentUser(), 1, card.getName(), card.getId());
                         parseCard.saveInBackground();
                     } else {
+                        // This means we found the card so we just need to increment it
                         ParseCard newParseCard = itemList.get(0);
                         newParseCard.incrementCount();
                         newParseCard.saveInBackground();
                     }
-                    Log.i(TAG, "Success: " + itemList.toString());
+                    Log.i(TAG, "Successfully added a card to Parse");
                 } else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
             }
         });
-        // If it doesn't already exist create it
-       //     ParseCard parseCard = new ParseCard(card.setName, card.getNumber(), ParseUser.getCurrentUser(), 1, card.getName(), card.getId());
-       //     parseCard.saveInBackground();
-        // If it already exists just increment its count value
+    }
+
+    private void removeCard(final Card card) {
+        // First query Parse to see if the card already exists
+        ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
+        query.whereEqualTo("owner", ParseUser.getCurrentUser());
+        query.whereEqualTo("cardId", card.getId());
+        query.setLimit(1);
+        query.findInBackground(new FindCallback<ParseCard>() {
+            public void done(List<ParseCard> itemList, ParseException e) {
+                if (e == null) {
+                    // Access the array of results here
+                    if (!(itemList.isEmpty())) {
+                        // This means we found the card so we just need to decrement it
+                        ParseCard newParseCard = itemList.get(0);
+                        newParseCard.decrementCount();
+                        newParseCard.saveInBackground();
+                    }
+                    Log.i(TAG, "Successfully removed a card from Parse");
+                } else {
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
+            }
+        });
     }
 
     @Override

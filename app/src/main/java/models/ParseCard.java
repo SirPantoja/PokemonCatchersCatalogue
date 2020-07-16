@@ -64,6 +64,10 @@ public class ParseCard extends ParseObject {
         increment("count");
     }
 
+    public void decrementCount() {
+        increment("count", -1);
+    }
+
     public String getName() {
         return getString("name");
     }
