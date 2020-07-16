@@ -98,7 +98,50 @@ A platform for pokemon tcg collectors and competitors to keep a record of their 
 ## Schema 
 [This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+
+Set object
+|Property|Type|Description|
+|--------|----|-----------|
+|name|String|name of the set|
+|symbolUrl|String|url of the set symbol image|
+|logoUrl|String|url of the set logo image|
+|code|String|a unique identifier for the set|
+|totalCards|int|the number of cards in this set|
+
+Card object
+|Property|Type|Description|
+|--------|----|-----------|
+|name|String|name of the card|
+|id|String|a unique identifier of each card|
+|url|String|the url of the card image|
+|number|int|the position of the card in the set|
+
+Friend object
+|Property|Type|Description|
+|--------|----|-----------|
+|username|String|username of friend|
+|profileUrl|String|url of profile pic|
+
+User Parse object
+|Property|Type|Description|
+|--------|----|-----------|
+|objectId|String|a unique identifier for each user|
+|createdAt|Date|time when user was created|
+|username|String|name of user|
+|password|String|password of user|
+|profilePic|String|url of profile pic|
+
+Card Parse object
+|Property|Type|Description|
+|--------|----|-----------|
+|objectId|String|a unique identifier for each card|
+|createdAt|Date|time when card was created|
+|setName|String|set to which card corresponds to|
+|setNumber|int|position of card in set|
+|customCardImageUrl|String|url of user taken card image|
+|owner|Pointer to User|tells which user owns card|
+|count|int|tells how many of this card are owned|
+
 ### Networking
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
