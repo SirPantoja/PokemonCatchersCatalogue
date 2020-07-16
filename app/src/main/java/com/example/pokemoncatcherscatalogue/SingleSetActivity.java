@@ -93,7 +93,8 @@ public class SingleSetActivity extends AppCompatActivity {
                     Card card;
                     try {
                         card = new Card(jsonArray.getJSONObject(i).getString("name"), jsonArray.getJSONObject(i).getString("id"),
-                                jsonArray.getJSONObject(i).getString("imageUrl"), jsonArray.getJSONObject(i).getInt("number"));
+                                jsonArray.getJSONObject(i).getString("imageUrl"), jsonArray.getJSONObject(i).getString("set"),
+                                jsonArray.getJSONObject(i).getInt("number"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                         return;

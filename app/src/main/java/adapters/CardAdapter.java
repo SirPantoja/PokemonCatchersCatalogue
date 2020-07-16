@@ -17,6 +17,9 @@ import com.bumptech.glide.Glide;
 import com.example.pokemoncatcherscatalogue.CardDetailsActivity;
 import com.example.pokemoncatcherscatalogue.R;
 import com.example.pokemoncatcherscatalogue.SingleSetActivity;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
@@ -24,6 +27,7 @@ import org.parceler.Parcels;
 import java.util.List;
 
 import models.Card;
+import models.ParseCard;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
@@ -68,6 +72,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                     // TODO Increment the card count for this card
                     Toast.makeText(context, "Incremented", Toast.LENGTH_SHORT).show();
                     Log.i(TAG, "username: " + ParseUser.getCurrentUser().getUsername() + " card: " + card.getName());
+                    addCard(card);
                 } else {
                     // Use an intent to go the CardDetailsActivity since we are not in edit mode
                     Intent intent = new Intent(context, CardDetailsActivity.class);
@@ -76,6 +81,36 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                 }
             }
         });
+    }
+
+    private void addCard(final Card card) {
+        // First query Parse to see if the card already exists
+        ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
+        query.whereEqualTo("owner", ParseUser.getCurrentUser());
+        query.whereEqualTo("cardId", card.getId());
+        query.setLimit(1);
+        query.findInBackground(new FindCallback<ParseCard>() {
+            public void done(List<ParseCard> itemList, ParseException e) {
+                if (e == null) {
+                    // Access the array of results here
+                    if (itemList.isEmpty()) {
+                        ParseCard parseCard = new ParseCard(card.setName, card.getNumber(), ParseUser.getCurrentUser(), 1, card.getName(), card.getId());
+                        parseCard.saveInBackground();
+                    } else {
+                        ParseCard newParseCard = itemList.get(0);
+                        newParseCard.incrementCount();
+                        newParseCard.saveInBackground();
+                    }
+                    Log.i(TAG, "Success: " + itemList.toString());
+                } else {
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
+            }
+        });
+        // If it doesn't already exist create it
+       //     ParseCard parseCard = new ParseCard(card.setName, card.getNumber(), ParseUser.getCurrentUser(), 1, card.getName(), card.getId());
+       //     parseCard.saveInBackground();
+        // If it already exists just increment its count value
     }
 
     @Override

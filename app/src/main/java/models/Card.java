@@ -9,15 +9,17 @@ public class Card implements Comparable<Card> {
     private String name;
     private String id;          // Unique identifier for each card
     private String url;
+    public String setName;
     private int number;         // Number of card within the set
 
     // Required empty public constructor
     public Card () { }
 
-    public Card (String name, String id, String url, int number) {
+    public Card (String name, String id, String url, String setName, int number) {
         this.name = name;
         this.id = id;
         this.url = url;
+        this.setName = setName;
         this.number = number;
     }
 
