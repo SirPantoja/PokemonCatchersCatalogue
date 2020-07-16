@@ -61,6 +61,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         // Set the item views based off card
         TextView tvCardName = holder.tvCardName;
         tvCardName.setText(card.getName());
+        TextView tvCount = holder.tvCount;
+        tvCount.setText("Count: " + card.count);
         ImageView ivCard = holder.ivCard;
         Glide.with(context).load(card.getUrl()).into(ivCard);
 
@@ -84,6 +86,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     }
 
     private void addCard(final Card card) {
+        // Increment the card count field and notify the adapter
+        card.count++;
+        notifyDataSetChanged();
         // First query Parse to see if the card already exists
         ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
         query.whereEqualTo("owner", ParseUser.getCurrentUser());
@@ -112,6 +117,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     }
 
     private void removeCard(final Card card) {
+        // Decrement the count field and notify the adapter
+        card.count--;
+        notifyDataSetChanged();
         // First query Parse to see if the card already exists
         ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
         query.whereEqualTo("owner", ParseUser.getCurrentUser());
@@ -143,11 +151,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tvCardName;
+        public TextView tvCount;
         public ImageView ivCard;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCardName = itemView.findViewById(R.id.tvCardName);
+            tvCount = itemView.findViewById(R.id.tvCount);
             ivCard = itemView.findViewById(R.id.ivCard);
         }
     }

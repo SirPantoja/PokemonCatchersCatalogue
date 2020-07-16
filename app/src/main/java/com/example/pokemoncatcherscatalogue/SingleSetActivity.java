@@ -14,6 +14,10 @@ import android.widget.ToggleButton;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,9 +25,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import adapters.CardAdapter;
 import models.Card;
+import models.ParseCard;
 import okhttp3.Headers;
 
 public class SingleSetActivity extends AppCompatActivity {
@@ -95,6 +101,8 @@ public class SingleSetActivity extends AppCompatActivity {
                         card = new Card(jsonArray.getJSONObject(i).getString("name"), jsonArray.getJSONObject(i).getString("id"),
                                 jsonArray.getJSONObject(i).getString("imageUrl"), jsonArray.getJSONObject(i).getString("set"),
                                 jsonArray.getJSONObject(i).getInt("number"));
+                        getCount(card);
+                        Log.i(TAG, card.getName() + " " +card.count);
                     } catch (JSONException e) {
                         e.printStackTrace();
                         return;
@@ -111,6 +119,34 @@ public class SingleSetActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.e(TAG, "onFailure, Error getting cards");
                 // TODO throw throwable lol
+            }
+        });
+    }
+
+    private void getCount(final Card card) {
+        // First query Parse to see if the card already exists
+        ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
+        query.whereEqualTo("owner", ParseUser.getCurrentUser());
+        query.whereEqualTo("cardId", card.getId());
+        query.setLimit(1);
+        query.findInBackground(new FindCallback<ParseCard>() {
+            public void done(List<ParseCard> itemList, ParseException e) {
+                if (e == null) {
+                    // Access the array of results here
+                    if (itemList.isEmpty()) {
+                        // This means this card doesn't already exist so we do nothing since count is at 0
+                        return;
+                    } else {
+                        // This means we found the card so we just need to increment it
+                        ParseCard newParseCard = itemList.get(0);
+                        card.count = newParseCard.getCount();
+                    }
+                    Log.i(TAG, "Successfully retrieved count from Parse. count: " + card.count);
+                    // Since we incremented card.count we have to let the adapter know so the view changes
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
             }
         });
     }

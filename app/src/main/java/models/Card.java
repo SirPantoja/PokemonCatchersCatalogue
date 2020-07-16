@@ -11,6 +11,7 @@ public class Card implements Comparable<Card> {
     private String url;
     public String setName;
     private int number;         // Number of card within the set
+    public int count = 0;
 
     // Required empty public constructor
     public Card () { }
