@@ -43,6 +43,8 @@ A platform for pokemon tcg collectors and competitors to keep a record of their 
 * Have a friends list
 * Allows friends to trade
 * Allows friends to view each others collections
+* Add profile pics for viewing friends
+* Add profile fragment that lets you have details about your collection
 * Use FB login
 * Interact with ebay to find current listings
 * Implement a twitter feed
@@ -50,6 +52,7 @@ A platform for pokemon tcg collectors and competitors to keep a record of their 
 * Card battler mode
 * Contain information about the latest sets
 * Approximate value of certain sets or collections for a user
+* Add searches and filters
 * ...
 
 ### 2. Screen Archetypes
