@@ -14,7 +14,9 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ public class CardDetailsActivity extends AppCompatActivity {
     private ImageView ivCardDetails;
     private TextView tvCardName;
     private Button btnTakePic;
+    private Switch switchCardDetails;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public String photoFileName = "photo.jpg";
     File photoFile;
@@ -53,6 +56,7 @@ public class CardDetailsActivity extends AppCompatActivity {
         ivCardDetails = findViewById(R.id.ivCardDetails);
         tvCardName = findViewById(R.id.tvCardName);
         btnTakePic = findViewById(R.id.btnTakePic);
+        switchCardDetails = findViewById(R.id.switchCardDetails);
 
         // Get the intent
         Intent intent = getIntent();
@@ -68,6 +72,51 @@ public class CardDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(CardDetailsActivity.this, "Button clicked", Toast.LENGTH_SHORT).show();
                 onLaunchCamera();
+            }
+        });
+
+        // Set an on switch listener for the switch
+        switchCardDetails.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    Toast.makeText(CardDetailsActivity.this, "ON", Toast.LENGTH_SHORT).show();
+                    getCustomUrl();
+                } else {
+                    Toast.makeText(CardDetailsActivity.this, "OFF", Toast.LENGTH_SHORT).show();
+                    Glide.with(CardDetailsActivity.this).load(card.getUrl()).into(ivCardDetails);
+                }
+            }
+        });
+    }
+
+    private void getCustomUrl() {
+        // First query Parse to see if the card already exists
+        ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
+        query.whereEqualTo("owner", ParseUser.getCurrentUser());
+        query.whereEqualTo("cardId", card.getId());
+        query.setLimit(1);
+        query.findInBackground(new FindCallback<ParseCard>() {
+            public void done(List<ParseCard> itemList, ParseException e) {
+                if (e == null) {
+                    // Access the array of results here
+                    if (itemList.isEmpty()) {
+                        // This means this card doesn't already exist so we do nothing since count is at 0
+                        Toast.makeText(CardDetailsActivity.this, "No image found", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    // This means we found the card so we just need to update it
+                    ParseCard newParseCard = itemList.get(0);
+                    if (newParseCard.getCustomCardImage() == null) {
+                        Log.i(TAG, "No custom image yet");
+                        return;
+                    }
+                    Log.i(TAG, "Successfully retrieved card: " + newParseCard.getCustomCardImage().getUrl());
+                    // Add the taken image
+                    Glide.with(CardDetailsActivity.this).load(newParseCard.getCustomCardImage().getUrl()).into(ivCardDetails);
+                } else {
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
             }
         });
     }
@@ -116,20 +165,16 @@ public class CardDetailsActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                // RESIZE BITMAP, see section below
-                // Load the taken image into a preview
-                ImageView ivPreview = (ImageView) findViewById(R.id.ivCardDetails);
-                ivPreview.setImageBitmap(takenImage);
                 // Create a ParseFile and upload it to Parse
                 ParseFile parseFile = new ParseFile(photoFile);
-                getCount(parseFile);
+                putPhoto(parseFile);
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void getCount(final ParseFile parseFile) {
+    private void putPhoto(final ParseFile parseFile) {
         // First query Parse to see if the card already exists
         ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
         query.whereEqualTo("owner", ParseUser.getCurrentUser());

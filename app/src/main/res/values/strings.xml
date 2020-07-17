@@ -17,4 +17,8 @@
     <string name="friends">Friends</string>
     <string name="profile">Profile</string>
     <string name="logout">LOGOUT</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="turn_on_custom_image">Turn on Custom Image</string>
+    <string name="find_by_username">Find by Username...</string>
+    <string name="add">Add</string>
 </resources>

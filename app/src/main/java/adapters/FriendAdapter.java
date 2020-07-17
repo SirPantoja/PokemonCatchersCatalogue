@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.pokemoncatcherscatalogue.R;
+import com.parse.ParseException;
 
 import java.util.List;
 
@@ -50,8 +51,12 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         ImageView ivProfilePic = holder.ivProfilePic;
 
         // Populate the views
-        tvFriendUsername.setText(friend.getUsername());
-        Glide.with(context).load(friend.getProfileUrl()).into(ivProfilePic);
+        try {
+            tvFriendUsername.setText(friend.getFriend().fetchIfNeeded().getUsername());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Glide.with(context).load(friend.getProfilePic().getUrl()).into(ivProfilePic);
     }
 
     @Override
