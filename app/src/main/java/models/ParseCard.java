@@ -1,6 +1,7 @@
 package models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -35,12 +36,12 @@ public class ParseCard extends ParseObject {
         put("setNumber", setNumber);
     }
 
-    public String getCustomCardImageUrl() {
-        return getString("customCardUrl");
+    public ParseFile getCustomCardImage() {
+        return getParseFile("customCardImage");
     }
 
-    public void setCustomCardImageUrl(String customCardImageUrl) {
-        put("customCardImageUrl", customCardImageUrl);
+    public void setCustomCardImage(ParseFile customCardImage) {
+        put("customCardImage", customCardImage);
     }
 
     public ParseUser getOwner() {
