@@ -40,4 +40,17 @@ public class Friend extends ParseObject {
     public ParseUser getFriend() {
         return getParseUser("actualFriend");
     }
+
+    public void setBio(String bio) {
+        put("bio", bio);
+    }
+
+    public String getBio() {
+        String bio = getString("bio");
+        if (bio == null) {
+            return "";
+        } else {
+            return bio;
+        }
+    }
 }

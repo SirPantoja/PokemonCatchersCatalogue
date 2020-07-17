@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/ivProfilePic"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
@@ -26,4 +26,15 @@
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/ivProfilePic"
         tools:text="Friend Username" />
+
+    <TextView
+        android:id="@+id/tvBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFriendUsername"
+        android:layout_alignParentBottom="false"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/ivProfilePic"
+        tools:text="Friend Bio" />
 </RelativeLayout>

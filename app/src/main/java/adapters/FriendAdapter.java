@@ -48,6 +48,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
         // Set item views
         TextView tvFriendUsername = holder.tvFriendUsername;
+        TextView tvBio = holder.tvBio;
         ImageView ivProfilePic = holder.ivProfilePic;
 
         // Populate the views
@@ -56,6 +57,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        tvBio.setText(friend.getBio());
         Glide.with(context).load(friend.getProfilePic().getUrl()).into(ivProfilePic);
     }
 
@@ -67,6 +69,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tvFriendUsername;
+        public TextView tvBio;
         public ImageView ivProfilePic;
 
         public ViewHolder(@NonNull View itemView) {
@@ -74,6 +77,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
             // Link up the views
             tvFriendUsername = itemView.findViewById(R.id.tvFriendUsername);
+            tvBio = itemView.findViewById(R.id.tvBio);
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
         }
     }
