@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlCardDetails"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CardDetailsActivity">
@@ -27,8 +27,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/image_of_card" />
+        android:contentDescription="@string/image_of_card"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/btnTakePic"

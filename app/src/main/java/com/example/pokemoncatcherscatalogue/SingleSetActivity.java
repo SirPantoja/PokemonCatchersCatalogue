@@ -123,6 +123,7 @@ public class SingleSetActivity extends AppCompatActivity {
     }
 
     private void getCount(final Card card) {
+        Log.i(TAG, "Getting count");
         // First query Parse to see if the card already exists
         ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
         query.whereEqualTo("owner", ParseUser.getCurrentUser());

@@ -3,6 +3,7 @@ package com.example.pokemoncatcherscatalogue;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,11 +44,13 @@ public class CardDetailsActivity extends AppCompatActivity {
     private TextView tvCardName;
     private Button btnTakePic;
     private Switch switchCardDetails;
+    private RelativeLayout rlCardDetails;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public String photoFileName = "photo.jpg";
     File photoFile;
     private Card card;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +61,7 @@ public class CardDetailsActivity extends AppCompatActivity {
         tvCardName = findViewById(R.id.tvCardName);
         btnTakePic = findViewById(R.id.btnTakePic);
         switchCardDetails = findViewById(R.id.switchCardDetails);
+        rlCardDetails = findViewById(R.id.rlCardDetails);
 
         // Get the intent
         Intent intent = getIntent();
@@ -86,6 +91,22 @@ public class CardDetailsActivity extends AppCompatActivity {
                     Toast.makeText(CardDetailsActivity.this, "OFF", Toast.LENGTH_SHORT).show();
                     Glide.with(CardDetailsActivity.this).load(card.getUrl()).into(ivCardDetails);
                 }
+            }
+        });
+
+        // Set on swipe listener for the entire layout
+        rlCardDetails.setOnTouchListener(new OnSwipeTouchListener(this) {
+            // Override the default empty swipe functions
+            @Override
+            public void onSwipeLeft() {
+                Toast.makeText(CardDetailsActivity.this, "Left", Toast.LENGTH_SHORT).show();
+                // TODO get the next card
+            }
+
+            @Override
+            public void onSwipeRight() {
+                Toast.makeText(CardDetailsActivity.this, "Right", Toast.LENGTH_SHORT).show();
+                // TODO get the previous card
             }
         });
     }
