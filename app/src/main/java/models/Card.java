@@ -1,16 +1,20 @@
 package models;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import org.parceler.Parcel;
 
 @Parcel
 public class Card implements Comparable<Card> {
 
     // TODO change these to public and change their references
-    private String name;
-    private String id;          // Unique identifier for each card
-    private String url;
+    public String name;
+    public String id;          // Unique identifier for each card
+    public String url;
     public String setName;
-    private int number;         // Number of card within the set
+    public int number;         // Number of card within the set
     public int count = 0;
 
     // Required empty public constructor

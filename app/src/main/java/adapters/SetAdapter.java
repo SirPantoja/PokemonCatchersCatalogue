@@ -2,6 +2,7 @@ package adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import models.Set;
 
 public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
+    public static final String TAG = "SetAdapter";
     private List<Set> sets;
     private Context context;
     public SetAdapter (List<Set> sets) {
@@ -31,6 +33,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     @NonNull
     @Override
     public SetAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.i(TAG, "onCreateViewHolder");
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -44,6 +47,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull SetAdapter.ViewHolder holder, int position) {
+        Log.i(TAG, "OnBindViewHolder");
         // Get the data based off the position
         final Set set = sets.get(position);
 
@@ -62,7 +66,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
             public void onClick(View view) {
                 // Start an intent to go to the SingleSetActivity
                 Intent intent = new Intent(context, SingleSetActivity.class);
-                intent.putExtra("code", set.getSetCode());
+                intent.putExtra("code", set.getCode());
                 context.startActivity(intent);
             }
         });
@@ -87,5 +91,10 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
             tvSetName = itemView.findViewById(R.id.tvSetName);
             rlSet = itemView.findViewById(R.id.rlSet);
         }
+    }
+
+    public void clear() {
+        sets.clear();
+        notifyDataSetChanged();
     }
 }

@@ -1,11 +1,24 @@
 package models;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Set {
 
+    @ColumnInfo
     private String name;
+    @ColumnInfo
     private String logoUrl;
+    @ColumnInfo
     private String symbolUrl;
-    private String code;
+    @PrimaryKey
+    @ColumnInfo
+    @NonNull
+    private String code;                    // Unique identifier per set, thus our primary key
+    @ColumnInfo
     private int totalCards;
 
     public Set(String name, String logoUrl, String symbolUrl, String code, int totalCards) {
@@ -28,7 +41,7 @@ public class Set {
         return symbolUrl;
     }
 
-    public String getSetCode() {
+    public String getCode() {
         return code;
     }
 

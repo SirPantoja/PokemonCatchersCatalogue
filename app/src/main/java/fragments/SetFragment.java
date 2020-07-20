@@ -1,6 +1,7 @@
 package fragments;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.pokemoncatcherscatalogue.ParseApplication;
 import com.example.pokemoncatcherscatalogue.R;
 import models.Set;
 import adapters.SetAdapter;
@@ -27,6 +29,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.SetDao;
 import okhttp3.Headers;
 
 public class SetFragment extends Fragment {
@@ -36,6 +39,7 @@ public class SetFragment extends Fragment {
     protected SetAdapter adapter;
     protected List<Set> sets;
     private Context context;
+    private SetDao setDao;
 
     public SetFragment() {
         // Required empty public constructor
@@ -45,6 +49,8 @@ public class SetFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
+        // Set up the data access object
+        setDao = ((ParseApplication) context.getApplicationContext()).getMyDatabase().setDao();
 
         // Set up the Recycler View
         rvSets = view.findViewById(R.id.rvSets);
@@ -52,6 +58,22 @@ public class SetFragment extends Fragment {
         adapter = new SetAdapter(sets);
         rvSets.setAdapter(adapter);
         rvSets.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Query the database for existing set data
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.i(TAG, "Entered the AsyncTask for retrieving");
+                List<Set> newSets = new ArrayList<>();
+                newSets = setDao.getAll();
+                for (Set set : newSets) {
+                    Log.i(TAG, "Retrieving" + set.getName());
+                    sets.add(set);
+                }
+                adapter.notifyDataSetChanged();
+                Log.i(TAG, "DATA SET CHANGED");
+            }
+        });
 
         // Make the API call for sets
         Log.i(TAG, "About to call getSets");
@@ -67,6 +89,8 @@ public class SetFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Headers headers, JsonHttpResponseHandler.JSON json) {
                 Log.i(TAG, "onSuccess");
+                // Clear the adapter before populating it
+                adapter.clear();
                 // Access a JSON object response with `json.jsonObject`
                 Log.d(TAG, json.jsonObject.toString());
                 JSONArray jsonArray;
@@ -77,6 +101,8 @@ public class SetFragment extends Fragment {
                     e.printStackTrace();
                     return;
                 }
+                // Create a new set list to store fresh data
+                final List<Set> newSets = new ArrayList<>();
                 Log.i(TAG, jsonArray.toString());
                 for (int i = 0; i < jsonArray.length(); i++) {
                     try {
@@ -85,19 +111,31 @@ public class SetFragment extends Fragment {
                                 jsonArray.getJSONObject(i).getString("symbolUrl"), jsonArray.getJSONObject(i).getString("code"),
                                 jsonArray.getJSONObject(i).getInt("totalCards"));
                         // Add the set to sets
+                        newSets.add(set);
                         sets.add(set);
                     } catch (JSONException e) {
                         e.printStackTrace();
                         return;
                     }
                 }
+                // Query the database for existing set data
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i(TAG, "Entered the AsyncTask for saving");
+                        setDao.insertSet(newSets.toArray(new Set[0]));
+                        for (Set set : newSets) {
+                            Log.i(TAG, "Saving" + set.getName());
+                        }
+                    }
+                });
+                Log.i(TAG, "DATA SET ABOUT TO BE CHANGED");
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.e(TAG, "onFailure");
-                // TODO throw throwable
+                Log.e(TAG, "onFailure", throwable);
             }
         });
     }

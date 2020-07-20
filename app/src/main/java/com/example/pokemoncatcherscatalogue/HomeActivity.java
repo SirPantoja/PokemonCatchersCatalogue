@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 import fragments.FriendsFragment;
 import fragments.ProfileFragment;
 import fragments.SetFragment;
+import models.SetDao;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
+    private SetDao setDao;
 
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
