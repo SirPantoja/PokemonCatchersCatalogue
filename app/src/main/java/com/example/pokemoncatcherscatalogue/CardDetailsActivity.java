@@ -23,19 +23,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.RequestParams;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.parceler.Parcels;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import models.Card;
 import models.ParseCard;
+import okhttp3.Headers;
 
 public class CardDetailsActivity extends AppCompatActivity {
 
@@ -49,6 +57,8 @@ public class CardDetailsActivity extends AppCompatActivity {
     public String photoFileName = "photo.jpg";
     File photoFile;
     private Card card;
+    private String setCode;
+    private int setNumber;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -66,6 +76,10 @@ public class CardDetailsActivity extends AppCompatActivity {
         // Get the intent
         Intent intent = getIntent();
         card = Parcels.unwrap(getIntent().getParcelableExtra("card"));
+
+        // Get the setCode and number from card
+        setNumber = card.number;
+        setCode = card.setCode;
 
         // Fill up the views
         tvCardName.setText(card.getName());
@@ -101,6 +115,8 @@ public class CardDetailsActivity extends AppCompatActivity {
             public void onSwipeLeft() {
                 Toast.makeText(CardDetailsActivity.this, "Left", Toast.LENGTH_SHORT).show();
                 // TODO get the next card
+                // TODO do error checking to make sure not out of bounds setNumber
+                getNewCard(setNumber + 1, setCode);
             }
 
             @Override
@@ -219,6 +235,29 @@ public class CardDetailsActivity extends AppCompatActivity {
                 } else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
+            }
+        });
+    }
+
+    private void getNewCard(int setNumber, String setCode) {
+        Log.i(TAG, "Getting a new card");
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("number", setNumber);
+        params.put("setCode", setCode);
+
+
+        client.get("https://api.pokemontcg.io/v1/cards", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.i(TAG, "onSuccess " + json.toString());
+                // TODO update the current view to reflect the change to the current card
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "onFailure, Error getting cards", throwable);
             }
         });
     }

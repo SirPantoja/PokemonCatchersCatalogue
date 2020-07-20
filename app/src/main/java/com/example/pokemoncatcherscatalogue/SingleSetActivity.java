@@ -99,7 +99,7 @@ public class SingleSetActivity extends AppCompatActivity {
                     Card card;
                     try {
                         card = new Card(jsonArray.getJSONObject(i).getString("name"), jsonArray.getJSONObject(i).getString("id"),
-                                jsonArray.getJSONObject(i).getString("imageUrl"), jsonArray.getJSONObject(i).getString("set"),
+                                jsonArray.getJSONObject(i).getString("imageUrl"), jsonArray.getJSONObject(i).getString("setCode"),
                                 jsonArray.getJSONObject(i).getInt("number"));
                         getCount(card);
                         Log.i(TAG, card.getName() + " " +card.count);
