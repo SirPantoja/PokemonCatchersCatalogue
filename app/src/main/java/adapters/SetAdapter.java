@@ -93,8 +93,15 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         }
     }
 
+    // Clears the adapter
     public void clear() {
         sets.clear();
+        notifyDataSetChanged();
+    }
+
+    // Adds all the elements from the given list to the data set
+    public void addAll(List<Set> sets) {
+        this.sets.addAll(sets);
         notifyDataSetChanged();
     }
 }

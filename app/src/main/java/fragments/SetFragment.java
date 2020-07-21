@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,6 +41,7 @@ public class SetFragment extends Fragment {
     protected List<Set> sets;
     private Context context;
     private SetDao setDao;
+    private SwipeRefreshLayout swipeContainer;
 
     public SetFragment() {
         // Required empty public constructor
@@ -58,6 +60,24 @@ public class SetFragment extends Fragment {
         adapter = new SetAdapter(sets);
         rvSets.setAdapter(adapter);
         rvSets.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Set up the swipeContainer
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                getSets(sets);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
         // Query the database for existing set data
         Log.i(TAG, "Entered the AsyncTask for retrieving");
@@ -124,6 +144,9 @@ public class SetFragment extends Fragment {
                 }
                 Log.i(TAG, "DATA SET ABOUT TO BE CHANGED");
                 adapter.notifyDataSetChanged();
+
+                // Set the swipeContainer to false in case that was what called getSets
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
