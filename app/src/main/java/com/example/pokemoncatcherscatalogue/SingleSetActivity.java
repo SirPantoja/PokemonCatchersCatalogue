@@ -8,7 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
+import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
@@ -39,6 +43,8 @@ public class SingleSetActivity extends AppCompatActivity {
     private ArrayList<Card> cards;
     private CardAdapter adapter;
     private ToggleButton btnEditToggle;
+    private Spinner spinnerSort;
+    private boolean check = false;          // Because of a spinner patch https://stackoverflow.com/questions/13397933/android-spinner-avoid-onitemselected-calls-during-initialization
     public static boolean isChecked = false;
 
 
@@ -54,12 +60,55 @@ public class SingleSetActivity extends AppCompatActivity {
         // Link up views
         rvCards = findViewById(R.id.rvCards);
         btnEditToggle = findViewById(R.id.btnEditToggle);
+        spinnerSort = findViewById(R.id.spinnerSort);
 
         // Set on check listener for the toggle button
         btnEditToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 SingleSetActivity.isChecked = isChecked;            // Perhaps not the most idiomatic, TODO change this up to be better
+            }
+        });
+
+        // Set on item selected listener for the spinner and call the appropriate sort functions
+        spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // See the reference on the boolean for why this if statement is here
+                if (check) {
+                    switch (i) {
+                        case 0:
+                            Toast.makeText(SingleSetActivity.this, "Number", Toast.LENGTH_SHORT).show();
+                            Card.sort = Card.SORT.NUMBER;
+                            Collections.sort(cards);
+                            break;
+                        case 1:
+                            Toast.makeText(SingleSetActivity.this, "Type", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 2:
+                            Toast.makeText(SingleSetActivity.this, "HP", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 3:
+                            Toast.makeText(SingleSetActivity.this, "Rarity", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 4:
+                            Toast.makeText(SingleSetActivity.this, "Alphabetical", Toast.LENGTH_SHORT).show();
+                            Card.sort = Card.SORT.ALPHABETICAL;
+                            Collections.sort(cards);
+                            break;
+                        default:
+                            // Do nothing; assume the user does not want a sort change
+                            break;
+                    }
+                    adapter.notifyDataSetChanged();
+                } else {
+                    check = true;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // Nothing should be done; assume the user wants to keep current sort
             }
         });
 
@@ -86,7 +135,7 @@ public class SingleSetActivity extends AppCompatActivity {
         client.get("https://api.pokemontcg.io/v1/cards", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.i(TAG, "onSuccess");
+                Log.i(TAG, "onSuccess " + json.toString());
                 JSONArray jsonArray = null;
                 try {
                     jsonArray = json.jsonObject.getJSONArray("cards");
@@ -110,6 +159,7 @@ public class SingleSetActivity extends AppCompatActivity {
                     cards.add(card);
                 }
                 // We want to sort the cards
+                Card.sort = Card.SORT.NUMBER;
                 Collections.sort(cards);
                 // Notify adapter
                 adapter.notifyDataSetChanged();
