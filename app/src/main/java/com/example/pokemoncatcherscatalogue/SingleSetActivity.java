@@ -102,7 +102,7 @@ public class SingleSetActivity extends AppCompatActivity {
                                 jsonArray.getJSONObject(i).getString("imageUrl"), jsonArray.getJSONObject(i).getString("setCode"),
                                 jsonArray.getJSONObject(i).getInt("number"));
                         getCount(card);
-                        Log.i(TAG, card.getName() + " " +card.count);
+                        Log.i(TAG, card.name + " " + card.count);
                     } catch (JSONException e) {
                         e.printStackTrace();
                         return;
@@ -127,7 +127,7 @@ public class SingleSetActivity extends AppCompatActivity {
         // First query Parse to see if the card already exists
         ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
         query.whereEqualTo("owner", ParseUser.getCurrentUser());
-        query.whereEqualTo("cardId", card.getId());
+        query.whereEqualTo("cardId", card.id);
         query.setLimit(1);
         query.findInBackground(new FindCallback<ParseCard>() {
             public void done(List<ParseCard> itemList, ParseException e) {

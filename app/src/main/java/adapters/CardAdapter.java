@@ -60,11 +60,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
         // Set the item views based off card
         TextView tvCardName = holder.tvCardName;
-        tvCardName.setText(card.getName());
+        tvCardName.setText(card.name);
         TextView tvCount = holder.tvCount;
         tvCount.setText("Count: " + card.count);
         ImageView ivCard = holder.ivCard;
-        Glide.with(context).load(card.getUrl()).into(ivCard);
+        Glide.with(context).load(card.url).into(ivCard);
 
         // Set on click listener for ivCard
         ivCard.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +73,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                 if (SingleSetActivity.isChecked) {
                     // TODO Increment the card count for this card
                     Toast.makeText(context, "Incremented", Toast.LENGTH_SHORT).show();
-                    Log.i(TAG, "username: " + ParseUser.getCurrentUser().getUsername() + " card: " + card.getName());
+                    Log.i(TAG, "username: " + ParseUser.getCurrentUser().getUsername() + " card: " + card.name);
                     addCard(card);
                 } else {
                     // Use an intent to go the CardDetailsActivity since we are not in edit mode
@@ -92,7 +92,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         // First query Parse to see if the card already exists
         ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
         query.whereEqualTo("owner", ParseUser.getCurrentUser());
-        query.whereEqualTo("cardId", card.getId());
+        query.whereEqualTo("cardId", card.id);
         query.setLimit(1);
         query.findInBackground(new FindCallback<ParseCard>() {
             public void done(List<ParseCard> itemList, ParseException e) {
@@ -100,7 +100,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                     // Access the array of results here
                     if (itemList.isEmpty()) {
                         // This means this card doesn't already exist so we need to create it
-                        ParseCard parseCard = new ParseCard(card.setCode, card.getNumber(), ParseUser.getCurrentUser(), 1, card.getName(), card.getId());
+                        ParseCard parseCard = new ParseCard(card.setCode, card.number, ParseUser.getCurrentUser(), 1, card.name, card.id);
                         parseCard.saveInBackground();
                     } else {
                         // This means we found the card so we just need to increment it
@@ -123,7 +123,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         // First query Parse to see if the card already exists
         ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
         query.whereEqualTo("owner", ParseUser.getCurrentUser());
-        query.whereEqualTo("cardId", card.getId());
+        query.whereEqualTo("cardId", card.id);
         query.setLimit(1);
         query.findInBackground(new FindCallback<ParseCard>() {
             public void done(List<ParseCard> itemList, ParseException e) {

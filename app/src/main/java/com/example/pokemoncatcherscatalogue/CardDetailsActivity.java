@@ -34,6 +34,7 @@ import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.io.File;
@@ -57,8 +58,6 @@ public class CardDetailsActivity extends AppCompatActivity {
     public String photoFileName = "photo.jpg";
     File photoFile;
     private Card card;
-    private String setCode;
-    private int setNumber;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -77,13 +76,9 @@ public class CardDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         card = Parcels.unwrap(getIntent().getParcelableExtra("card"));
 
-        // Get the setCode and number from card
-        setNumber = card.number;
-        setCode = card.setCode;
-
         // Fill up the views
-        tvCardName.setText(card.getName());
-        Glide.with(this).load(card.getUrl()).into(ivCardDetails);
+        tvCardName.setText(card.name);
+        Glide.with(this).load(card.url).into(ivCardDetails);
 
         // Set on click listener for btnTakePic
         btnTakePic.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +98,7 @@ public class CardDetailsActivity extends AppCompatActivity {
                     getCustomUrl();
                 } else {
                     Toast.makeText(CardDetailsActivity.this, "OFF", Toast.LENGTH_SHORT).show();
-                    Glide.with(CardDetailsActivity.this).load(card.getUrl()).into(ivCardDetails);
+                    Glide.with(CardDetailsActivity.this).load(card.url).into(ivCardDetails);
                 }
             }
         });
@@ -114,15 +109,13 @@ public class CardDetailsActivity extends AppCompatActivity {
             @Override
             public void onSwipeLeft() {
                 Toast.makeText(CardDetailsActivity.this, "Left", Toast.LENGTH_SHORT).show();
-                // TODO get the next card
-                // TODO do error checking to make sure not out of bounds setNumber
-                getNewCard(setNumber + 1, setCode);
+                getNewCard(card.number + 1, card.setCode);
             }
 
             @Override
             public void onSwipeRight() {
                 Toast.makeText(CardDetailsActivity.this, "Right", Toast.LENGTH_SHORT).show();
-                // TODO get the previous card
+                getNewCard(card.number - 1, card.setCode);
             }
         });
     }
@@ -131,7 +124,7 @@ public class CardDetailsActivity extends AppCompatActivity {
         // First query Parse to see if the card already exists
         ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
         query.whereEqualTo("owner", ParseUser.getCurrentUser());
-        query.whereEqualTo("cardId", card.getId());
+        query.whereEqualTo("cardId", card.id);
         query.setLimit(1);
         query.findInBackground(new FindCallback<ParseCard>() {
             public void done(List<ParseCard> itemList, ParseException e) {
@@ -215,7 +208,7 @@ public class CardDetailsActivity extends AppCompatActivity {
         // First query Parse to see if the card already exists
         ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
         query.whereEqualTo("owner", ParseUser.getCurrentUser());
-        query.whereEqualTo("cardId", card.getId());
+        query.whereEqualTo("cardId", card.id);
         query.setLimit(1);
         query.findInBackground(new FindCallback<ParseCard>() {
             public void done(List<ParseCard> itemList, ParseException e) {
@@ -251,8 +244,20 @@ public class CardDetailsActivity extends AppCompatActivity {
         client.get("https://api.pokemontcg.io/v1/cards", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.i(TAG, "onSuccess " + json.toString());
+                Log.i(TAG, "onSuccess " + json.jsonObject.toString());
                 // TODO update the current view to reflect the change to the current card
+                try {
+                    JSONObject jsonObject = json.jsonObject.getJSONArray("cards").getJSONObject(0);
+                    card.name = jsonObject.getString("name");
+                    card.id = jsonObject.getString("id");
+                    card.url = jsonObject.getString("imageUrl");
+                    card.number = jsonObject.getInt("number");
+                    // Count is not found here
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                tvCardName.setText(card.name);
+                Glide.with(CardDetailsActivity.this).load(card.url).into(ivCardDetails);
             }
 
             @Override

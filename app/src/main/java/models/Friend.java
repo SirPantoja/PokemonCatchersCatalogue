@@ -46,11 +46,8 @@ public class Friend extends ParseObject {
     }
 
     public String getBio() {
-        String bio = getString("bio");
-        if (bio == null) {
-            return "";
-        } else {
-            return bio;
-        }
+        String bio = "";
+        bio = getString("bio");
+        return bio;
     }
 }
