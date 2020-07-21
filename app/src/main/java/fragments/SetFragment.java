@@ -60,24 +60,22 @@ public class SetFragment extends Fragment {
         rvSets.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Query the database for existing set data
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "Entered the AsyncTask for retrieving");
-                List<Set> newSets = new ArrayList<>();
-                newSets = setDao.getAll();
-                for (Set set : newSets) {
-                    Log.i(TAG, "Retrieving" + set.getName());
-                    sets.add(set);
-                }
-                adapter.notifyDataSetChanged();
-                Log.i(TAG, "DATA SET CHANGED");
-            }
-        });
+        Log.i(TAG, "Entered the AsyncTask for retrieving");
+        List<Set> newSets = new ArrayList<>();
+        newSets = setDao.getAll();
+        for (Set set : newSets) {
+            Log.i(TAG, "Retrieving" + set.getName());
+            sets.add(set);
+        }
+        adapter.notifyDataSetChanged();
+        Log.i(TAG, "DATA SET CHANGED");
 
-        // Make the API call for sets
+
+        // Make the API call for sets only if there are no sets in SQLite
         Log.i(TAG, "About to call getSets");
-        getSets(sets);
+        if (newSets.isEmpty()) {
+            getSets(sets);
+        }
     }
 
     // Get the set list from the API
@@ -119,16 +117,11 @@ public class SetFragment extends Fragment {
                     }
                 }
                 // Query the database for existing set data
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.i(TAG, "Entered the AsyncTask for saving");
-                        setDao.insertSet(newSets.toArray(new Set[0]));
-                        for (Set set : newSets) {
-                            Log.i(TAG, "Saving" + set.getName());
-                        }
-                    }
-                });
+                Log.i(TAG, "Entered the AsyncTask for saving");
+                setDao.insertSet(newSets.toArray(new Set[0]));
+                for (Set set : newSets) {
+                    Log.i(TAG, "Saving" + set.getName());
+                }
                 Log.i(TAG, "DATA SET ABOUT TO BE CHANGED");
                 adapter.notifyDataSetChanged();
             }
