@@ -21,6 +21,9 @@ public class Card implements Comparable<Card> {
     public int number;                          // Number of card within the set
     public int count = 0;
     public static SORT sort = SORT.NUMBER;            // Set the default as a set number sort
+    public Integer hp = 0;
+    private int rarity = 0;
+    public String type = "none";
 
     // Required empty public constructor
     public Card () { }
@@ -33,22 +36,51 @@ public class Card implements Comparable<Card> {
         this.number = number;
     }
 
+    // Does a custom comparison based on the static member variable sort
     @Override
     public int compareTo(Card card) {
         switch(card.sort) {
             case NUMBER:
                 return this.number - card.number;
             case TYPE:
-                break;
+                return this.type.compareTo(card.type);
             case HP:
-                break;
+                return card.hp - this.hp;
             case RARITY:
-                break;
+                return card.rarity - this.rarity;
             case ALPHABETICAL:
                 return this.name.compareTo(card.name);
             default:
                 break;
         }
         return 1;
+    }
+
+    // Sometimes the API provides improper format so this does error handling
+    public void setHp(String hp) {
+        try {
+            this.hp = Integer.parseInt(hp);
+        } catch (NumberFormatException e) {
+            this.hp = 0;
+        }
+    }
+
+    // Rarity comes as a string; this assigns a numerical value to each rarity string value
+    public void setRarity(String rarity) {
+        if (rarity.equalsIgnoreCase("common")) {
+            this.rarity = 1;
+        } else if (rarity.equalsIgnoreCase("uncommon")) {
+            this.rarity = 2;
+        } else if (rarity.equalsIgnoreCase("rare")) {
+            this.rarity = 3;
+        } else if (rarity.equalsIgnoreCase("rare holo")) {
+            this.rarity = 4;
+        } else if (rarity.equalsIgnoreCase("rare holo lv.x") || rarity.equalsIgnoreCase("rare holo ex") || rarity.equalsIgnoreCase("rare holo gx")) {
+            this.rarity = 5;
+        } else if (rarity.equalsIgnoreCase("rare secret") || rarity.equalsIgnoreCase("rare ultra")) {
+            this.rarity = 6;
+        } else {
+            this.rarity = 0;
+        }
     }
 }

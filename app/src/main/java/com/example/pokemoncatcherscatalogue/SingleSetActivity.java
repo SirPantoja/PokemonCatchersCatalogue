@@ -74,25 +74,26 @@ public class SingleSetActivity extends AppCompatActivity {
         spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // See the reference on the boolean for why this if statement is here
+                // Use switch to find out what type of sort is being requested and then execute it
                 if (check) {
                     switch (i) {
                         case 0:
-                            Toast.makeText(SingleSetActivity.this, "Number", Toast.LENGTH_SHORT).show();
                             Card.sort = Card.SORT.NUMBER;
                             Collections.sort(cards);
                             break;
                         case 1:
-                            Toast.makeText(SingleSetActivity.this, "Type", Toast.LENGTH_SHORT).show();
+                            Card.sort = Card.SORT.TYPE;
+                            Collections.sort(cards);
                             break;
                         case 2:
-                            Toast.makeText(SingleSetActivity.this, "HP", Toast.LENGTH_SHORT).show();
+                            Card.sort = Card.SORT.HP;
+                            Collections.sort(cards);
                             break;
                         case 3:
-                            Toast.makeText(SingleSetActivity.this, "Rarity", Toast.LENGTH_SHORT).show();
+                            Card.sort = Card.SORT.RARITY;
+                            Collections.sort(cards);
                             break;
                         case 4:
-                            Toast.makeText(SingleSetActivity.this, "Alphabetical", Toast.LENGTH_SHORT).show();
                             Card.sort = Card.SORT.ALPHABETICAL;
                             Collections.sort(cards);
                             break;
@@ -126,8 +127,9 @@ public class SingleSetActivity extends AppCompatActivity {
     }
 
     private void getCards(String setCode, final ArrayList<Card> cards) {
-        Log.i(TAG, "Getting cards");
 
+        // Set up for the API request
+        Log.i(TAG, "Getting cards");
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("setCode", setCode);
@@ -135,8 +137,10 @@ public class SingleSetActivity extends AppCompatActivity {
         client.get("https://api.pokemontcg.io/v1/cards", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.i(TAG, "onSuccess " + json.toString());
-                JSONArray jsonArray = null;
+                Log.i(TAG, "onSuccess");
+
+                // Get the cards array to access data
+                JSONArray jsonArray;
                 try {
                     jsonArray = json.jsonObject.getJSONArray("cards");
                 } catch (JSONException e) {
@@ -145,22 +149,50 @@ public class SingleSetActivity extends AppCompatActivity {
                 }
                 // Set the values in card through a loop
                 for (int i = 0 ; i < jsonArray.length(); i++) {
+
+                    // Create the card using the constructor
                     Card card;
                     try {
                         card = new Card(jsonArray.getJSONObject(i).getString("name"), jsonArray.getJSONObject(i).getString("id"),
                                 jsonArray.getJSONObject(i).getString("imageUrl"), jsonArray.getJSONObject(i).getString("setCode"),
                                 jsonArray.getJSONObject(i).getInt("number"));
                         getCount(card);
-                        Log.i(TAG, card.name + " " + card.count);
                     } catch (JSONException e) {
+                        // This means there was a critical error with the API request
                         e.printStackTrace();
                         return;
                     }
+
+                    // Get the optional parameter of type; not all cards have a type
+                    try {
+                        Log.i(TAG, "Types: " + jsonArray.getJSONObject(i).getJSONArray("types").getString(0));
+                        card.type = jsonArray.getJSONObject(i).getJSONArray("types").getString(0);
+                    } catch (JSONException e) {
+                        // Do nothing; it is expected that some cards do not have this
+                    }
+
+                    // Get the optional parameter of hp; not all cards have hp
+                    try {
+                        card.setHp(jsonArray.getJSONObject(i).getString("hp"));
+                    } catch (JSONException e) {
+                        // Do nothing; it is expected that some cards do not have this
+                    }
+
+                    // Get the optional parameter of rarity; not all cards have a rarity
+                    try {
+                        card.setRarity(jsonArray.getJSONObject(i).getString("rarity"));
+                    } catch (JSONException e) {
+                        // Do nothing; it is expected that some cards do not have this
+                    }
+
+                    // Add the new card to the list of cards for the adapter
                     cards.add(card);
                 }
-                // We want to sort the cards
+
+                // Sort the cards; the default sorting is by set number
                 Card.sort = Card.SORT.NUMBER;
                 Collections.sort(cards);
+
                 // Notify adapter
                 adapter.notifyDataSetChanged();
             }
@@ -173,7 +205,7 @@ public class SingleSetActivity extends AppCompatActivity {
     }
 
     private void getCount(final Card card) {
-        Log.i(TAG, "Getting count");
+
         // First query Parse to see if the card already exists
         ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
         query.whereEqualTo("owner", ParseUser.getCurrentUser());
