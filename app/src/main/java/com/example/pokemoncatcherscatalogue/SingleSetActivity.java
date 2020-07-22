@@ -82,6 +82,7 @@ public class SingleSetActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 SingleSetActivity.isChecked = isChecked;            // Perhaps not the most idiomatic, TODO change this up to be better
+                adapter.notifyDataSetChanged();
             }
         });
 

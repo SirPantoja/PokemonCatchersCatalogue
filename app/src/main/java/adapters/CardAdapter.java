@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +49,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         // Inflate the custom layout
         View cardView = inflater.inflate(R.layout.card_item, parent, false);
 
-        // Return a ew holder instance
+        // Return a new holder instance
         ViewHolder viewHolder = new ViewHolder(cardView);
         return viewHolder;
     }
@@ -65,17 +66,38 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         tvCount.setText("Count: " + card.count);
         ImageView ivCard = holder.ivCard;
         Glide.with(context).load(card.url).into(ivCard);
+        Button btnAdd = holder.btnAdd;
+        Button btnSub = holder.btnSub;
+
+        // Set the buttons to GONE; this will change based on which edit mode we are in
+        if (SingleSetActivity.isChecked) {
+            btnAdd.setVisibility(View.VISIBLE);
+            btnSub.setVisibility(View.VISIBLE);
+        } else {
+            btnAdd.setVisibility(View.GONE);
+            btnSub.setVisibility(View.GONE);
+        }
+
+        // Set on click listener for buttons and have them add and subtract cards
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addCard(card);
+            }
+        });
+
+        btnSub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeCard(card);
+            }
+        });
 
         // Set on click listener for ivCard
         ivCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (SingleSetActivity.isChecked) {
-                    // TODO Increment the card count for this card
-                    Toast.makeText(context, "Incremented", Toast.LENGTH_SHORT).show();
-                    Log.i(TAG, "username: " + ParseUser.getCurrentUser().getUsername() + " card: " + card.name);
-                    addCard(card);
-                } else {
+                if (!(SingleSetActivity.isChecked)) {
                     // Use an intent to go the CardDetailsActivity since we are not in edit mode
                     Intent intent = new Intent(context, CardDetailsActivity.class);
                     intent.putExtra("card", Parcels.wrap(card));
@@ -153,12 +175,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         public TextView tvCardName;
         public TextView tvCount;
         public ImageView ivCard;
+        public Button btnAdd;
+        public Button btnSub;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCardName = itemView.findViewById(R.id.tvCardName);
             tvCount = itemView.findViewById(R.id.tvCount);
             ivCard = itemView.findViewById(R.id.ivCard);
+            btnAdd = itemView.findViewById(R.id.btnAdd);
+            btnSub = itemView.findViewById(R.id.btnSub);
         }
     }
 }

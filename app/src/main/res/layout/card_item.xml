@@ -28,6 +28,19 @@
         tools:srcCompat="@tools:sample/avatars"
         android:focusable="true" />
 
+    <Button
+        android:id="@+id/btnSub"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/ivCard"
+        android:layout_alignParentBottom="false"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toStartOf="@+id/btnAdd"
+        android:foreground="@android:drawable/ic_delete"
+        android:textSize="12sp" tools:targetApi="m"
+        tools:ignore="UnusedAttribute" />
+
     <TextView
         android:id="@+id/tvCount"
         android:layout_width="wrap_content"
@@ -36,4 +49,16 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
         tools:text="Count" />
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@+id/ivCard"
+        android:layout_alignBottom="@+id/ivCard"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:foreground="@android:drawable/ic_input_add"
+        android:textSize="12sp" tools:targetApi="m"
+        tools:ignore="UnusedAttribute" />
 </RelativeLayout>
