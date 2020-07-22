@@ -102,7 +102,7 @@ public class CardDetailsActivity extends AppCompatActivity {
                 }
             }
         });
-
+        
         // Set on swipe listener for the entire layout
         rlCardDetails.setOnTouchListener(new OnSwipeTouchListener(this) {
             // Override the default empty swipe functions

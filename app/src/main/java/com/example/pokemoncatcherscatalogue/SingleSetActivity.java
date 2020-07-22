@@ -11,10 +11,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -49,6 +51,8 @@ public class SingleSetActivity extends AppCompatActivity {
     private boolean check = false;          // Because of a spinner patch https://stackoverflow.com/questions/13397933/android-spinner-avoid-onitemselected-calls-during-initialization
     public static boolean isChecked = false;
     private CardDao cardDao;
+    private String logoUrl;
+    private ImageView ivSingleLogo;
 
 
     @Override
@@ -62,11 +66,16 @@ public class SingleSetActivity extends AppCompatActivity {
         // Get the data stored from the intent
         Intent intent = getIntent();
         String setCode = intent.getStringExtra("code");
+        String logoUrl = intent.getStringExtra("logo");
 
         // Link up views
         rvCards = findViewById(R.id.rvCards);
         btnEditToggle = findViewById(R.id.btnEditToggle);
         spinnerSort = findViewById(R.id.spinnerSort);
+        ivSingleLogo = findViewById(R.id.ivSingleLogo);
+
+        // Use Glide to load the logo url into the view
+        Glide.with(this).load(logoUrl).into(ivSingleLogo);
 
         // Set on check listener for the toggle button
         btnEditToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

@@ -67,6 +67,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
                 // Start an intent to go to the SingleSetActivity
                 Intent intent = new Intent(context, SingleSetActivity.class);
                 intent.putExtra("code", set.getCode());
+                intent.putExtra("logo", set.getLogoUrl());
                 context.startActivity(intent);
             }
         });
