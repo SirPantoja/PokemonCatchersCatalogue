@@ -51,6 +51,7 @@ public class SetFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
+
         // Set up the data access object
         setDao = ((ParseApplication) context.getApplicationContext()).getMyDatabase().setDao();
 
@@ -80,7 +81,6 @@ public class SetFragment extends Fragment {
                 android.R.color.holo_red_light);
 
         // Query the database for existing set data
-        Log.i(TAG, "Entered the AsyncTask for retrieving");
         List<Set> newSets = new ArrayList<>();
         newSets = setDao.getAll();
         for (Set set : newSets) {

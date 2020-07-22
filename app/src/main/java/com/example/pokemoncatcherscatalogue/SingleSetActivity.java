@@ -33,7 +33,9 @@ import java.util.List;
 
 import adapters.CardAdapter;
 import models.Card;
+import models.CardDao;
 import models.ParseCard;
+import models.Set;
 import okhttp3.Headers;
 
 public class SingleSetActivity extends AppCompatActivity {
@@ -46,12 +48,16 @@ public class SingleSetActivity extends AppCompatActivity {
     private Spinner spinnerSort;
     private boolean check = false;          // Because of a spinner patch https://stackoverflow.com/questions/13397933/android-spinner-avoid-onitemselected-calls-during-initialization
     public static boolean isChecked = false;
+    private CardDao cardDao;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_set);
+
+        // Set up the data access object
+        cardDao = ((ParseApplication) getApplicationContext()).getMyDatabase().cardDao();
 
         // Get the data stored from the intent
         Intent intent = getIntent();
@@ -122,8 +128,24 @@ public class SingleSetActivity extends AppCompatActivity {
         // Set the layout manager
         rvCards.setLayoutManager(new GridLayoutManager(this, 3));
 
-        // Make the API call for the cards in this set
-        getCards(setCode, cards);
+        // Query the database for existing card data
+        List<Card> newCards = new ArrayList<>();
+        newCards = cardDao.getAll(setCode);
+        for (Card card : newCards) {
+            Log.i(TAG, "Retrieving" + card.name);
+            cards.add(card);
+            // Query Parse for count information
+            getCount(card);
+            // Sort the cards
+            Card.sort = Card.SORT.NUMBER;
+            Collections.sort(cards);
+        }
+        adapter.notifyDataSetChanged();
+
+        if (newCards.isEmpty()) {
+            // Make the API call for the cards in this set
+            getCards(setCode, cards);
+        }
     }
 
     private void getCards(String setCode, final ArrayList<Card> cards) {
@@ -138,6 +160,9 @@ public class SingleSetActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "onSuccess");
+
+                // Create a new card list to store fresh data
+                final List<Card> newCards = new ArrayList<>();
 
                 // Get the cards array to access data
                 JSONArray jsonArray;
@@ -186,11 +211,18 @@ public class SingleSetActivity extends AppCompatActivity {
 
                     // Add the new card to the list of cards for the adapter
                     cards.add(card);
+                    newCards.add(card);
                 }
 
                 // Sort the cards; the default sorting is by set number
                 Card.sort = Card.SORT.NUMBER;
                 Collections.sort(cards);
+
+                // Query the database to save card data
+                cardDao.insertCard(newCards.toArray(new Card[0]));
+                for (Card card : newCards) {
+                    Log.i(TAG, "Saving " + card.name);
+                }
 
                 // Notify adapter
                 adapter.notifyDataSetChanged();

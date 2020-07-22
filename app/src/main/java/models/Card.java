@@ -1,8 +1,14 @@
 package models;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import org.parceler.Parcel;
 
 @Parcel
+@Entity
 public class Card implements Comparable<Card> {
 
     // To ease the readability of the sort switch case
@@ -14,15 +20,27 @@ public class Card implements Comparable<Card> {
         ALPHABETICAL
     }
 
+    @ColumnInfo
     public String name;
+    @ColumnInfo
+    @PrimaryKey
+    @NonNull
     public String id;                           // Unique identifier for each card
+    @ColumnInfo
     public String url;
+    @ColumnInfo
     public String setCode;
+    @ColumnInfo
     public int number;                          // Number of card within the set
+    @ColumnInfo
     public int count = 0;
+    @ColumnInfo
     public static SORT sort = SORT.NUMBER;            // Set the default as a set number sort
+    @ColumnInfo
     public Integer hp = 0;
-    private int rarity = 0;
+    @ColumnInfo
+    public int rarity = 0;
+    @ColumnInfo
     public String type = "none";
 
     // Required empty public constructor
@@ -83,4 +101,5 @@ public class Card implements Comparable<Card> {
             this.rarity = 0;
         }
     }
+
 }
