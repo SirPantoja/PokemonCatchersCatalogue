@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.room.Room;
 
+import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -14,6 +15,7 @@ import models.ParseCard;
 public class ParseApplication extends Application {
 
     MyDatabase myDatabase;
+    AsyncHttpClient client;
 
     @Override
     public void onCreate() {
@@ -21,6 +23,9 @@ public class ParseApplication extends Application {
 
         // when upgrading versions, kill the original tables by using fallbackToDestructiveMigration()
         myDatabase = Room.databaseBuilder(this, MyDatabase.class, MyDatabase.NAME).fallbackToDestructiveMigration().allowMainThreadQueries().build();
+
+        // Instantiate the API client
+        client = new AsyncHttpClient();
 
         // Register custom Parse objects
         ParseObject.registerSubclass(ParseCard.class);
@@ -38,4 +43,9 @@ public class ParseApplication extends Application {
     public MyDatabase getMyDatabase() {
         return myDatabase;
     }
+
+    public AsyncHttpClient getClient() {
+        return client;
+    }
+
 }

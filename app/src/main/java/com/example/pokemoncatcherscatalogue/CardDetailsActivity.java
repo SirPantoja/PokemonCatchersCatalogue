@@ -235,7 +235,7 @@ public class CardDetailsActivity extends AppCompatActivity {
     private void getNewCard(int setNumber, String setCode) {
         Log.i(TAG, "Getting a new card");
 
-        AsyncHttpClient client = new AsyncHttpClient();
+        AsyncHttpClient client = ((ParseApplication) getApplicationContext()).getClient();
         RequestParams params = new RequestParams();
         params.put("number", setNumber);
         params.put("setCode", setCode);

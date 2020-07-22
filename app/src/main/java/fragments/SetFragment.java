@@ -100,7 +100,7 @@ public class SetFragment extends Fragment {
 
     // Get the set list from the API
     private void getSets(final List<Set> sets) {
-        AsyncHttpClient client = new AsyncHttpClient();
+        AsyncHttpClient client = ((ParseApplication) context.getApplicationContext()).getClient();
         RequestParams params = new RequestParams();
 
         client.get("https://api.pokemontcg.io/v1/sets", params, new JsonHttpResponseHandler() {

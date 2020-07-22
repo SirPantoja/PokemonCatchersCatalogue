@@ -130,7 +130,7 @@ public class SingleSetActivity extends AppCompatActivity {
 
         // Set up for the API request
         Log.i(TAG, "Getting cards");
-        AsyncHttpClient client = new AsyncHttpClient();
+        AsyncHttpClient client = ((ParseApplication) this.getApplicationContext()).getClient();
         RequestParams params = new RequestParams();
         params.put("setCode", setCode);
 
@@ -165,7 +165,6 @@ public class SingleSetActivity extends AppCompatActivity {
 
                     // Get the optional parameter of type; not all cards have a type
                     try {
-                        Log.i(TAG, "Types: " + jsonArray.getJSONObject(i).getJSONArray("types").getString(0));
                         card.type = jsonArray.getJSONObject(i).getJSONArray("types").getString(0);
                     } catch (JSONException e) {
                         // Do nothing; it is expected that some cards do not have this
