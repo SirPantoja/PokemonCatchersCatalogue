@@ -249,7 +249,11 @@ public class SingleSetActivity extends AppCompatActivity {
 
         // First query Parse to see if the card already exists
         ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
-        query.whereEqualTo("owner", ParseUser.getCurrentUser());
+
+        // Check if we are in privileged mode or not; if not load the other Users information
+        ParseUser user = ((ParseApplication) getApplicationContext()).userPerm();
+
+        query.whereEqualTo("owner", user);
         query.whereEqualTo("cardId", card.id);
         query.setLimit(1);
         query.findInBackground(new FindCallback<ParseCard>() {

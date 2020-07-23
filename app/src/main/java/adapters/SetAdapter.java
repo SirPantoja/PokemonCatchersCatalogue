@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +27,7 @@ import models.Set;
 public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
     public static final String TAG = "SetAdapter";
+    private static final long FADE_DURATION = 1250;
     private List<Set> sets;
     private Context context;
     public SetAdapter (List<Set> sets) {
@@ -71,6 +75,15 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
                 context.startActivity(intent);
             }
         });
+
+        // Set the view to fade in
+        setFadeAnimation(holder.itemView);
+    }
+
+    private void setFadeAnimation(View view) {
+        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(FADE_DURATION);
+        view.startAnimation(anim);
     }
 
     @Override

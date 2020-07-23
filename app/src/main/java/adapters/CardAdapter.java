@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ import models.ParseCard;
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     public static final String TAG = "CardAdapter";
+    private static final long FADE_DURATION = 500;
     private List<Card> cards;
     private Context context;
 

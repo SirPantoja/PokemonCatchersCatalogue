@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context="fragments.ProfileFragment">
 
     <Button
@@ -20,8 +21,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        tools:src="@tools:sample/avatars"
-        android:contentDescription="@string/profile_pic" />
+        android:contentDescription="@string/profile_pic"
+        tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvUsername"
@@ -36,7 +37,7 @@
         android:textSize="30sp"
         tools:text="Username" />
 
-    <TextView
+    <EditText
         android:id="@+id/tvBio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,6 +45,28 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:autofillHints="Bio"
         android:textSize="30sp"
         tools:text="This is a bio!" />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBio"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/update" />
+
+    <Button
+        android:id="@+id/btnCamera"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@+id/ivProfile"
+        android:layout_alignBottom="@+id/ivProfile"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="#4ACD2D"
+        android:foreground="@android:drawable/ic_menu_camera" />
 </RelativeLayout>

@@ -123,7 +123,7 @@ public class CardDetailsActivity extends AppCompatActivity {
     private void getCustomUrl() {
         // First query Parse to see if the card already exists
         ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
-        query.whereEqualTo("owner", ParseUser.getCurrentUser());
+        query.whereEqualTo("owner", ((ParseApplication) getApplicationContext()).userPerm());
         query.whereEqualTo("cardId", card.id);
         query.setLimit(1);
         query.findInBackground(new FindCallback<ParseCard>() {
@@ -207,7 +207,7 @@ public class CardDetailsActivity extends AppCompatActivity {
     private void putPhoto(final ParseFile parseFile) {
         // First query Parse to see if the card already exists
         ParseQuery<ParseCard> query = ParseQuery.getQuery(ParseCard.class);
-        query.whereEqualTo("owner", ParseUser.getCurrentUser());
+        query.whereEqualTo("owner", ((ParseApplication) getApplicationContext()).userPerm());
         query.whereEqualTo("cardId", card.id);
         query.setLimit(1);
         query.findInBackground(new FindCallback<ParseCard>() {
@@ -245,7 +245,6 @@ public class CardDetailsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "onSuccess " + json.jsonObject.toString());
-                // TODO update the current view to reflect the change to the current card
                 try {
                     JSONObject jsonObject = json.jsonObject.getJSONArray("cards").getJSONObject(0);
                     card.name = jsonObject.getString("name");

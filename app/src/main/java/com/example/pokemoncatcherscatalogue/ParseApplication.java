@@ -7,6 +7,7 @@ import androidx.room.Room;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import models.Friend;
 import models.ParseCard;
@@ -16,6 +17,8 @@ public class ParseApplication extends Application {
 
     MyDatabase myDatabase;
     AsyncHttpClient client;
+    ParseUser guestUser;            // Obtained when accessing a friend's collection
+    static boolean perm = true;     // Permissions to edit user collection; only false when viewing a friend's collection
 
     @Override
     public void onCreate() {
@@ -48,4 +51,25 @@ public class ParseApplication extends Application {
         return client;
     }
 
+    public ParseUser getGuestUser() {
+        return guestUser;
+    }
+
+    public void setGuestUser(ParseUser guestUser) {
+        this.guestUser = guestUser;
+        perm = false;
+    }
+
+    public void permReset() {
+        perm = true;
+    }
+
+    // Given the privilege level return the proper user
+    public ParseUser userPerm() {
+        if (ParseApplication.perm) {
+            return ParseUser.getCurrentUser();
+        } else {
+            return getGuestUser();
+        }
+    }
 }

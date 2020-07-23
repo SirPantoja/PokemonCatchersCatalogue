@@ -24,6 +24,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/btnView"
         android:layout_toEndOf="@+id/ivProfilePic"
         tools:text="Friend Username" />
 
@@ -32,9 +34,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvFriendUsername"
+        android:layout_alignEnd="@+id/tvFriendUsername"
         android:layout_alignParentBottom="false"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_toEndOf="@+id/ivProfilePic"
         tools:text="Friend Bio" />
+
+    <Button
+        android:id="@+id/btnView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivProfilePic"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:text="@string/view_collection" />
 </RelativeLayout>

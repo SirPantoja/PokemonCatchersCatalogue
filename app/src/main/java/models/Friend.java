@@ -1,6 +1,7 @@
 package models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -46,8 +47,10 @@ public class Friend extends ParseObject {
     }
 
     public String getBio() {
-        String bio = "";
-        bio = getString("bio");
-        return bio;
+        try {
+            return getFriend().fetchIfNeeded().getString("bio");
+        } catch (ParseException e) {
+            return "could not get bio...";
+        }
     }
 }

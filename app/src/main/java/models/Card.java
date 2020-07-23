@@ -3,6 +3,7 @@ package models;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import org.parceler.Parcel;
@@ -46,6 +47,7 @@ public class Card implements Comparable<Card> {
     // Required empty public constructor
     public Card () { }
 
+    @Ignore
     public Card (String name, String id, String url, String setCode, int number) {
         this.name = name;
         this.id = id;

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,15 +20,18 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.pokemoncatcherscatalogue.MainActivity;
 import com.example.pokemoncatcherscatalogue.R;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";
     private Button btnLogout;
+    private Button btnUpdate;
+    private Button btnCamera;
     private ImageView ivProfile;
     private TextView tvUsername;
-    private TextView tvBio;
+    private EditText etBio;
     private Context context;
 
     public ProfileFragment() {
@@ -41,26 +45,47 @@ public class ProfileFragment extends Fragment {
 
         // Link up views
         btnLogout = view.findViewById(R.id.btnLogout);
+        btnUpdate = view.findViewById(R.id.btnUpdate);
+        btnCamera = view.findViewById(R.id.btnCamera);
         ivProfile = view.findViewById(R.id.ivProfile);
         tvUsername = view.findViewById(R.id.tvUsername);
-        tvBio = view.findViewById(R.id.tvBio);
+        etBio = view.findViewById(R.id.tvBio);
 
-        // Set on click listener for button
+        // Set on click listener for button logout
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Logout clicked", Toast.LENGTH_SHORT).show();
                 ParseUser.logOut();
-                ParseUser currentUser = ParseUser.getCurrentUser(); // This will now be null
                 // Send the user back to the login page
                 Intent intent = new Intent(context, MainActivity.class);
                 context.startActivity(intent);
             }
         });
 
+        // Set on click listener for button update
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get the text and upload to Parse
+                String bio = etBio.getText().toString();
+                ParseUser user = ParseUser.getCurrentUser();
+                user.put("bio", bio);
+                user.saveInBackground();
+            }
+        });
+
+        // Set on click listener for the camera button
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Camera", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         ParseUser user = ParseUser.getCurrentUser();
         tvUsername.setText(user.getUsername());
-        tvBio.setText(user.getString("bio"));
+        etBio.setText(user.getString("bio"));
         Glide.with(view).load(user.getParseFile("profilePic").getUrl()).centerCrop().into(ivProfile);
     }
 
