@@ -24,4 +24,5 @@
     <string name="sort_method">Sort Method</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="profile_pic">Profile Pic</string>
 </resources>

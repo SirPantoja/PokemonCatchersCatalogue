@@ -107,8 +107,12 @@ public class FriendsFragment extends Fragment {
 
     private void getFriends(final List<Friend> friends) {
         // Query Parse to get list of friends
-        ParseQuery<Friend> query = ParseQuery.getQuery(Friend.class);
-        query.whereEqualTo("ptrUser", ParseUser.getCurrentUser());
+        List<ParseQuery<Friend>> queries = new ArrayList<>();
+        queries.add(ParseQuery.getQuery(Friend.class));
+        queries.get(0).whereEqualTo("ptrUser", ParseUser.getCurrentUser());
+        queries.add(ParseQuery.getQuery(Friend.class));
+        queries.get(1).whereEqualTo("actualFriend", ParseUser.getCurrentUser());
+        ParseQuery<Friend> query = ParseQuery.or(queries);
         query.findInBackground(new FindCallback<Friend>() {
             public void done(List<Friend> itemList, ParseException e) {
                 if (e == null) {
@@ -119,6 +123,23 @@ public class FriendsFragment extends Fragment {
                     } else {
                         // Loop across itemList and add friends to friends
                         for (Friend friend : itemList) {
+                            // Check if the friend fields are out of order
+                            try {
+                                Log.i(TAG, "User: " + friend.getUser().fetchIfNeeded().getUsername() + " Friend: " + friend.getFriend().fetchIfNeeded().getUsername());
+                            } catch (ParseException ex) {
+                                ex.printStackTrace();
+                            }
+                            try {
+                                if (friend.getFriend().fetchIfNeeded().getUsername().equals(ParseUser.getCurrentUser().fetchIfNeeded().getUsername()))
+                                {
+                                    Log.i(TAG, "In here");
+                                    // Switch the two fields
+                                    friend.setFriend(friend.getUser());
+                                    friend.setUser(ParseUser.getCurrentUser());
+                                }
+                            } catch (ParseException ex) {
+                                ex.printStackTrace();
+                            }
                             friends.add(friend);
                         }
                         // Since we incremented friends we have to let the adapter know so the view changes

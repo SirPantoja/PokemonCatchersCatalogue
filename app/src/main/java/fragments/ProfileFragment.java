@@ -7,12 +7,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.pokemoncatcherscatalogue.MainActivity;
 import com.example.pokemoncatcherscatalogue.R;
 import com.parse.ParseUser;
@@ -21,6 +25,9 @@ public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";
     private Button btnLogout;
+    private ImageView ivProfile;
+    private TextView tvUsername;
+    private TextView tvBio;
     private Context context;
 
     public ProfileFragment() {
@@ -34,6 +41,9 @@ public class ProfileFragment extends Fragment {
 
         // Link up views
         btnLogout = view.findViewById(R.id.btnLogout);
+        ivProfile = view.findViewById(R.id.ivProfile);
+        tvUsername = view.findViewById(R.id.tvUsername);
+        tvBio = view.findViewById(R.id.tvBio);
 
         // Set on click listener for button
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +57,11 @@ public class ProfileFragment extends Fragment {
                 context.startActivity(intent);
             }
         });
+
+        ParseUser user = ParseUser.getCurrentUser();
+        tvUsername.setText(user.getUsername());
+        tvBio.setText(user.getString("bio"));
+        Glide.with(view).load(user.getParseFile("profilePic").getUrl()).centerCrop().into(ivProfile);
     }
 
     @Override
