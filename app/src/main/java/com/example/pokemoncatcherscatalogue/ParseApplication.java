@@ -18,7 +18,7 @@ public class ParseApplication extends Application {
     MyDatabase myDatabase;
     AsyncHttpClient client;
     ParseUser guestUser;            // Obtained when accessing a friend's collection
-    static boolean perm = true;     // Permissions to edit user collection; only false when viewing a friend's collection
+    public static boolean perm = true;     // Permissions to edit user collection; only false when viewing a friend's collection
 
     @Override
     public void onCreate() {

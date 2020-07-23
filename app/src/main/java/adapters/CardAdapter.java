@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.pokemoncatcherscatalogue.CardDetailsActivity;
+import com.example.pokemoncatcherscatalogue.ParseApplication;
 import com.example.pokemoncatcherscatalogue.R;
 import com.example.pokemoncatcherscatalogue.SingleSetActivity;
 import com.parse.FindCallback;
@@ -111,6 +112,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     }
 
     private void addCard(final Card card) {
+        // TODO Check our privilege level
+        if (!(((ParseApplication)context.getApplicationContext()).perm)) {
+            // We do not have edit permissions as a guest user
+            Log.e(TAG, "No edit permissions");
+            return;
+        }
         // Increment the card count field and notify the adapter
         card.count++;
         notifyDataSetChanged();
@@ -142,6 +149,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     }
 
     private void removeCard(final Card card) {
+        // TODO check our privilege
+        if (!(((ParseApplication)context.getApplicationContext()).perm)) {
+            // We do not have edit permissions as a guest user
+            Log.e(TAG, "No edit permissions");
+            return;
+        }
         // Decrement the count field and notify the adapter
         card.count--;
         notifyDataSetChanged();

@@ -85,6 +85,11 @@ public class CardDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(CardDetailsActivity.this, "Button clicked", Toast.LENGTH_SHORT).show();
+                if (!(((ParseApplication) getApplicationContext()).perm)) {
+                    // We do not have edit permissions as a guest user
+                    Log.e(TAG, "No edit permissions");
+                    return;
+                }
                 onLaunchCamera();
             }
         });
