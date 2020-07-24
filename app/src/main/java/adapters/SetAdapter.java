@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,7 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.pokemoncatcherscatalogue.R;
+import com.example.pokemoncatcherscatalogue.SetStatistics;
 import com.example.pokemoncatcherscatalogue.SingleSetActivity;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -59,6 +63,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         ImageView ivLogo = holder.ivLogo;
         TextView tvSetName = holder.tvSetName;
         RelativeLayout rlSet = holder.rlSet;
+        Button btnStatistics = holder.btnStatistics;
 
         // Put in the data
         tvSetName.setText(set.getName());
@@ -72,6 +77,20 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
                 Intent intent = new Intent(context, SingleSetActivity.class);
                 intent.putExtra("code", set.getCode());
                 intent.putExtra("logo", set.getLogoUrl());
+                context.startActivity(intent);
+            }
+        });
+
+        // Set on click listener to go to the SetStatistics activity
+        btnStatistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, SetStatistics.class);
+                intent.putExtra("code", set.getCode());
+                intent.putExtra("logo", set.getLogoUrl());
+                intent.putExtra("symbol", set.getSymbolUrl());
+                intent.putExtra("name", set.getName());
+                intent.putExtra("total", set.getTotalCards());
                 context.startActivity(intent);
             }
         });
@@ -96,6 +115,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         public ImageView ivLogo;
         public TextView tvSetName;
         public RelativeLayout rlSet;
+        public Button btnStatistics;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -104,6 +124,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
             ivLogo = itemView.findViewById(R.id.ivLogo);
             tvSetName = itemView.findViewById(R.id.tvSetName);
             rlSet = itemView.findViewById(R.id.rlSet);
+            btnStatistics = itemView.findViewById(R.id.btnStatistics);
         }
     }
 

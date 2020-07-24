@@ -69,4 +69,13 @@
         android:layout_marginBottom="0dp"
         android:background="#4ACD2D"
         android:foreground="@android:drawable/ic_menu_camera" />
+
+    <Button
+        android:id="@+id/btnRevert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnLogout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="Revert to Personal Collection" />
 </RelativeLayout>

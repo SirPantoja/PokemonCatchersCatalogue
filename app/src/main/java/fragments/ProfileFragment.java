@@ -18,8 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.pokemoncatcherscatalogue.HomeActivity;
 import com.example.pokemoncatcherscatalogue.MainActivity;
+import com.example.pokemoncatcherscatalogue.ParseApplication;
 import com.example.pokemoncatcherscatalogue.R;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -29,6 +32,7 @@ public class ProfileFragment extends Fragment {
     private Button btnLogout;
     private Button btnUpdate;
     private Button btnCamera;
+    private Button btnRevert;
     private ImageView ivProfile;
     private TextView tvUsername;
     private EditText etBio;
@@ -47,6 +51,7 @@ public class ProfileFragment extends Fragment {
         btnLogout = view.findViewById(R.id.btnLogout);
         btnUpdate = view.findViewById(R.id.btnUpdate);
         btnCamera = view.findViewById(R.id.btnCamera);
+        btnRevert = view.findViewById(R.id.btnRevert);
         ivProfile = view.findViewById(R.id.ivProfile);
         tvUsername = view.findViewById(R.id.tvUsername);
         etBio = view.findViewById(R.id.tvBio);
@@ -72,6 +77,18 @@ public class ProfileFragment extends Fragment {
                 ParseUser user = ParseUser.getCurrentUser();
                 user.put("bio", bio);
                 user.saveInBackground();
+            }
+        });
+
+        // Set on click listener for the revert collection button
+        btnRevert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Put user back into privileged mode
+                ((ParseApplication) context.getApplicationContext()).permReset();
+                // Use an intent to return them to the set fragment
+                Intent intent = new Intent(context, HomeActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -5,7 +5,8 @@
     android:id="@+id/rlSet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true">
+    android:clickable="true"
+    android:focusable="true">
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -27,4 +28,14 @@
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/ivLogo"
         tools:text="Set Name" />
+
+    <Button
+        android:id="@+id/btnStatistics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ivLogo"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="-110dp"
+        android:text="@string/stats" />
 </RelativeLayout>

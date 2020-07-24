@@ -27,4 +27,14 @@
     <string name="profile_pic">Profile Pic</string>
     <string name="update">Update</string>
     <string name="view_collection">View Collection</string>
+    <string name="stats">Stats</string>
+    <string name="repeats">Repeats</string>
+    <string name="total_cards">Total Cards Owned</string>
+    <string name="rares">Rares</string>
+    <string name="uncommons">Uncommons</string>
+    <string name="commons">Commons</string>
+    <string name="other">Other</string>
+    <string name="unique_cards">Unique Cards</string>
+    <string name="missing_cards">Missing Cards</string>
+    <string name="image_of_symbol">image of symbol</string>
 </resources>
