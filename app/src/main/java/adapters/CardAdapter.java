@@ -112,7 +112,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     }
 
     private void addCard(final Card card) {
-        // TODO Check our privilege level
         if (!(((ParseApplication)context.getApplicationContext()).perm)) {
             // We do not have edit permissions as a guest user
             Log.e(TAG, "No edit permissions");
@@ -149,7 +148,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     }
 
     private void removeCard(final Card card) {
-        // TODO check our privilege
         if (!(((ParseApplication)context.getApplicationContext()).perm)) {
             // We do not have edit permissions as a guest user
             Log.e(TAG, "No edit permissions");

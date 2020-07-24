@@ -1,6 +1,7 @@
 package adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.pokemoncatcherscatalogue.HomeActivity;
 import com.example.pokemoncatcherscatalogue.ParseApplication;
 import com.example.pokemoncatcherscatalogue.R;
 import com.parse.ParseException;
 
 import java.util.List;
 
+import fragments.SetFragment;
 import models.Friend;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
@@ -67,6 +70,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 // Set the virtual user up for collection viewing
                 try {
                     ((ParseApplication) appContext).setGuestUser(friend.getFriend().fetchIfNeeded());
+                    Intent intent = new Intent(context, HomeActivity.class);
+                    context.startActivity(intent);
                 } catch (ParseException e) {
                     Log.e(TAG, "Could not change user privilege");
                     e.printStackTrace();
