@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -53,6 +54,7 @@ public class SingleSetActivity extends AppCompatActivity {
     private CardDao cardDao;
     private String logoUrl;
     private ImageView ivSingleLogo;
+    private TextView tvEditMode;
 
 
     @Override
@@ -73,6 +75,13 @@ public class SingleSetActivity extends AppCompatActivity {
         btnEditToggle = findViewById(R.id.btnEditToggle);
         spinnerSort = findViewById(R.id.spinnerSort);
         ivSingleLogo = findViewById(R.id.ivSingleLogo);
+        tvEditMode = findViewById(R.id.tvEditMode);
+
+        // If not privileged hide UI
+        if (!(ParseApplication.perm)) {
+            btnEditToggle.setVisibility(View.INVISIBLE);
+            tvEditMode.setVisibility(View.INVISIBLE);
+        }
 
         // Use Glide to load the logo url into the view
         Glide.with(this).load(logoUrl).into(ivSingleLogo);
@@ -189,13 +198,19 @@ public class SingleSetActivity extends AppCompatActivity {
                     Card card;
                     try {
                         card = new Card(jsonArray.getJSONObject(i).getString("name"), jsonArray.getJSONObject(i).getString("id"),
-                                jsonArray.getJSONObject(i).getString("imageUrl"), jsonArray.getJSONObject(i).getString("setCode"),
-                                jsonArray.getJSONObject(i).getInt("number"));
+                                jsonArray.getJSONObject(i).getString("imageUrl"), jsonArray.getJSONObject(i).getString("setCode"));
                         getCount(card);
                     } catch (JSONException e) {
                         // This means there was a critical error with the API request
                         e.printStackTrace();
                         return;
+                    }
+
+                    // Get the optional parameter of type; not all cards have a valid number
+                    try {
+                        card.number = jsonArray.getJSONObject(i).getInt("number");
+                    } catch (JSONException e) {
+                        // Do nothing; it is expected that some cards do not have this
                     }
 
                     // Get the optional parameter of type; not all cards have a type

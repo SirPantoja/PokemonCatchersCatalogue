@@ -72,6 +72,11 @@ public class CardDetailsActivity extends AppCompatActivity {
         switchCardDetails = findViewById(R.id.switchCardDetails);
         rlCardDetails = findViewById(R.id.rlCardDetails);
 
+        // Hide views if not privileged
+        if (!(ParseApplication.perm)) {
+            btnTakePic.setVisibility(View.INVISIBLE);
+        }
+
         // Get the intent
         Intent intent = getIntent();
         card = Parcels.unwrap(getIntent().getParcelableExtra("card"));

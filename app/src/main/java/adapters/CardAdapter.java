@@ -28,10 +28,12 @@ import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.Card;
 import models.ParseCard;
+import models.Set;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
@@ -200,5 +202,17 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             btnAdd = itemView.findViewById(R.id.btnAdd);
             btnSub = itemView.findViewById(R.id.btnSub);
         }
+    }
+
+    // Clears the adapter
+    public void clear() {
+        cards.clear();
+        notifyDataSetChanged();
+    }
+
+    // Adds all the elements from the given list to the data set
+    public void addAll(ArrayList<Card> cards) {
+        this.cards.addAll(cards);
+        notifyDataSetChanged();
     }
 }

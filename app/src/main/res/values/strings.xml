@@ -37,4 +37,6 @@
     <string name="unique_cards">Unique Cards</string>
     <string name="missing_cards">Missing Cards</string>
     <string name="image_of_symbol">image of symbol</string>
+    <string name="search">Search</string>
+    <string name="search_for_a_card">Search for a card!</string>
 </resources>

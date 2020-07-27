@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import fragments.FriendsFragment;
 import fragments.ProfileFragment;
+import fragments.SearchFragment;
 import fragments.SetFragment;
 import models.SetDao;
 
@@ -111,6 +112,9 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.nav_first_fragment:
                 fragmentClass = SetFragment.class;
+                break;
+            case R.id.nav_fourth_fragment:
+                fragmentClass = SearchFragment.class;
                 break;
             default:
                 fragmentClass = ProfileFragment.class;

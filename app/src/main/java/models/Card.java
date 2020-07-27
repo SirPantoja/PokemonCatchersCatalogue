@@ -26,17 +26,17 @@ public class Card implements Comparable<Card> {
     @ColumnInfo
     @PrimaryKey
     @NonNull
-    public String id;                           // Unique identifier for each card
+    public String id;                                    // Unique identifier for each card
     @ColumnInfo
     public String url;
     @ColumnInfo
     public String setCode;
     @ColumnInfo
-    public int number;                          // Number of card within the set
+    public int number = 0;                               // Number of card within the set
     @ColumnInfo
     public int count = 0;
     @ColumnInfo
-    public static SORT sort = SORT.NUMBER;            // Set the default as a set number sort
+    public static SORT sort = SORT.NUMBER;               // Set the default as a set number sort
     @ColumnInfo
     public Integer hp = 0;
     @ColumnInfo
@@ -48,12 +48,11 @@ public class Card implements Comparable<Card> {
     public Card () { }
 
     @Ignore
-    public Card (String name, String id, String url, String setCode, int number) {
+    public Card (String name, String id, String url, String setCode) {
         this.name = name;
         this.id = id;
         this.url = url;
         this.setCode = setCode;
-        this.number = number;
     }
 
     // Does a custom comparison based on the static member variable sort
