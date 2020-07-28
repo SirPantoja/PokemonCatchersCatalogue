@@ -56,5 +56,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:layout_toStartOf="@+id/spinnerSort"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:transitionName="@string/image_of_logo"
+        android:contentDescription="@string/image_of_logo" />
 </RelativeLayout>

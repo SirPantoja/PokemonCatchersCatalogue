@@ -16,6 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:transitionName="@string/image_of_logo"
         android:contentDescription="@string/image_of_logo"
         tools:srcCompat="@tools:sample/avatars" />
 

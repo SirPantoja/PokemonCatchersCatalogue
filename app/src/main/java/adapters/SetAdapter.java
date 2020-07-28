@@ -1,5 +1,6 @@
 package adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -60,7 +62,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         final Set set = sets.get(position);
 
         // Set the item views based on the given data
-        ImageView ivLogo = holder.ivLogo;
+        final ImageView ivLogo = holder.ivLogo;
         TextView tvSetName = holder.tvSetName;
         RelativeLayout rlSet = holder.rlSet;
         Button btnStatistics = holder.btnStatistics;
@@ -77,7 +79,8 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
                 Intent intent = new Intent(context, SingleSetActivity.class);
                 intent.putExtra("code", set.getCode());
                 intent.putExtra("logo", set.getLogoUrl());
-                context.startActivity(intent);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, (View)ivLogo, "Image of logo");
+                context.startActivity(intent, options.toBundle());
             }
         });
 
@@ -91,7 +94,8 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
                 intent.putExtra("symbol", set.getSymbolUrl());
                 intent.putExtra("name", set.getName());
                 intent.putExtra("total", set.getTotalCards());
-                context.startActivity(intent);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, (View)ivLogo, "Image of logo");
+                context.startActivity(intent, options.toBundle());
             }
         });
 

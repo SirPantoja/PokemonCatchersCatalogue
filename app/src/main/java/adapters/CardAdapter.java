@@ -1,5 +1,6 @@
 package adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -70,7 +72,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         tvCardName.setText(card.name);
         TextView tvCount = holder.tvCount;
         tvCount.setText("Count: " + card.count);
-        ImageView ivCard = holder.ivCard;
+        final ImageView ivCard = holder.ivCard;
         Glide.with(context).load(card.url).into(ivCard);
         Button btnAdd = holder.btnAdd;
         Button btnSub = holder.btnSub;
@@ -107,7 +109,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                     // Use an intent to go the CardDetailsActivity since we are not in edit mode
                     Intent intent = new Intent(context, CardDetailsActivity.class);
                     intent.putExtra("card", Parcels.wrap(card));
-                    context.startActivity(intent);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, (View)ivCard, "Image of card");
+                    context.startActivity(intent, options.toBundle());
                 }
             }
         });

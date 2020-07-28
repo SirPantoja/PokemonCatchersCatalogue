@@ -83,6 +83,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         tools:srcCompat="@tools:sample/avatars"
+        android:transitionName="@string/image_of_logo"
         android:contentDescription="@string/image_of_logo" />
 
     <TextView
