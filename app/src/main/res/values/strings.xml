@@ -43,4 +43,5 @@
     <string name="series_name">Series Name</string>
     <string name="revert_to_personal_collection">Revert to Personal Collection</string>
     <string name="enter_your_bio">Enter your bio!</string>
+    <string name="new_deck">New deck</string>
 </resources>

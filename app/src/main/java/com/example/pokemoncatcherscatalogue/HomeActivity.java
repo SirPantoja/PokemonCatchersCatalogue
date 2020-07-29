@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+import fragments.DeckFragment;
 import fragments.FriendsFragment;
 import fragments.ProfileFragment;
 import fragments.SearchFragment;
@@ -115,6 +116,9 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.nav_fourth_fragment:
                 fragmentClass = SearchFragment.class;
+                break;
+            case R.id.nav_fifth_fragment:
+                fragmentClass = DeckFragment.class;
                 break;
             default:
                 fragmentClass = ProfileFragment.class;

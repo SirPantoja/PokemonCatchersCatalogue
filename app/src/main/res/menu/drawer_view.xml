@@ -17,5 +17,9 @@
             android:id="@+id/nav_fourth_fragment"
             android:icon="@drawable/search"
             android:title="@string/search" />
+        <item
+            android:id="@+id/nav_fifth_fragment"
+            android:icon="@drawable/build"
+            android:title="Deck Builder" />
     </group>
 </menu>
