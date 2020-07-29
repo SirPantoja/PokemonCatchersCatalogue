@@ -110,6 +110,7 @@ public class SetFragment extends Fragment {
     private void getSets(final List<Set> sets) {
         AsyncHttpClient client = ((ParseApplication) context.getApplicationContext()).getClient();
         RequestParams params = new RequestParams();
+        sets.clear();
 
         client.get("https://api.pokemontcg.io/v1/sets", params, new JsonHttpResponseHandler() {
             @Override
