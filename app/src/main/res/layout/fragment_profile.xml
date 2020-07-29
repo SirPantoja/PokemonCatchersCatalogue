@@ -19,8 +19,11 @@
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:scaleType="centerCrop"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:background="#000000"
+        android:padding="1dp"
         android:contentDescription="@string/profile_pic"
         tools:src="@tools:sample/avatars" />
 
@@ -46,8 +49,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:autofillHints="Bio"
+        android:hint="@string/enter_your_bio"
         android:textSize="30sp"
-        tools:text="This is a bio!" />
+        tools:text="This is a bio!"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/btnUpdate"
@@ -68,7 +73,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
         android:background="#4ACD2D"
-        android:foreground="@android:drawable/ic_menu_camera" />
+        android:foreground="@android:drawable/ic_menu_camera" tools:targetApi="m" />
 
     <Button
         android:id="@+id/btnRevert"
@@ -77,5 +82,5 @@
         android:layout_above="@+id/btnLogout"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:text="Revert to Personal Collection" />
+        android:text="@string/revert_to_personal_collection" />
 </RelativeLayout>

@@ -41,4 +41,6 @@
     <string name="search_for_a_card">Search for a card!</string>
     <string name="pokemon_catcher_s_catalogue">Pokemon Catcher\'s Catalogue</string>
     <string name="series_name">Series Name</string>
+    <string name="revert_to_personal_collection">Revert to Personal Collection</string>
+    <string name="enter_your_bio">Enter your bio!</string>
 </resources>
