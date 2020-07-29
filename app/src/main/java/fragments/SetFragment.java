@@ -20,6 +20,8 @@ import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.pokemoncatcherscatalogue.ParseApplication;
 import com.example.pokemoncatcherscatalogue.R;
+
+import models.Series;
 import models.Set;
 import adapters.SetAdapter;
 
@@ -28,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import models.SetDao;
@@ -39,6 +42,7 @@ public class SetFragment extends Fragment {
     private RecyclerView rvSets;
     protected SetAdapter adapter;
     protected List<Set> sets;
+    protected List<Series> series;
     private Context context;
     private SetDao setDao;
     private SwipeRefreshLayout swipeContainer;
@@ -58,8 +62,10 @@ public class SetFragment extends Fragment {
         // Set up the Recycler View
         rvSets = view.findViewById(R.id.rvSets);
         sets = new ArrayList<>();
-        adapter = new SetAdapter(sets);
-        rvSets.setAdapter(adapter);
+        series = new ArrayList<>();
+        /*series = setsToSeries(sets);
+        adapter = new SetAdapter(series);
+        rvSets.setAdapter(adapter);*/
         rvSets.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Set up the swipeContainer
@@ -87,14 +93,16 @@ public class SetFragment extends Fragment {
             Log.i(TAG, "Retrieving" + set.getName());
             sets.add(set);
         }
-        adapter.notifyDataSetChanged();
-        Log.i(TAG, "DATA SET CHANGED");
 
 
         // Make the API call for sets only if there are no sets in SQLite
         Log.i(TAG, "About to call getSets");
         if (newSets.isEmpty()) {
             getSets(sets);
+        } else {
+            setsToSeries(sets);
+            adapter = new SetAdapter(series);
+            rvSets.setAdapter(adapter);
         }
     }
 
@@ -107,10 +115,6 @@ public class SetFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Headers headers, JsonHttpResponseHandler.JSON json) {
                 Log.i(TAG, "onSuccess");
-                // Clear the adapter before populating it
-                adapter.clear();
-                // Access a JSON object response with `json.jsonObject`
-                Log.d(TAG, json.jsonObject.toString());
                 JSONArray jsonArray;
                 JSONObject jsonObject = json.jsonObject;
                 try {
@@ -127,7 +131,7 @@ public class SetFragment extends Fragment {
                         // Populate the set object
                         Set set = new Set(jsonArray.getJSONObject(i).getString("name"), jsonArray.getJSONObject(i).getString("logoUrl"),
                                 jsonArray.getJSONObject(i).getString("symbolUrl"), jsonArray.getJSONObject(i).getString("code"),
-                                jsonArray.getJSONObject(i).getInt("totalCards"));
+                                jsonArray.getJSONObject(i).getInt("totalCards"), jsonArray.getJSONObject(i).getString("series"));
                         // Add the set to sets
                         newSets.add(set);
                         sets.add(set);
@@ -143,6 +147,9 @@ public class SetFragment extends Fragment {
                     Log.i(TAG, "Saving" + set.getName());
                 }
                 Log.i(TAG, "DATA SET ABOUT TO BE CHANGED");
+                setsToSeries(sets);
+                adapter = new SetAdapter(series);
+                rvSets.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 
                 // Set the swipeContainer to false in case that was what called getSets
@@ -161,5 +168,28 @@ public class SetFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_set, container, false);
+    }
+
+    // Takes a list of sets, finds the series from the sets and then edits each series to have an associated list of sets
+    private void setsToSeries(List<Set> sets) {
+        Log.i(TAG, "setsToSeries");
+        series.clear();
+        List<String> titles = new ArrayList<>();
+        for (Set set : sets) {
+            if (!(titles.contains(set.getSeries()))) {
+                Log.i(TAG, "Title: " + set.getSeries());
+                titles.add(set.getSeries());
+            }
+        }
+
+        for (String title : titles) {
+            List<Set> tmpSets = new ArrayList<Set>();
+            for (Set set : sets) {
+                if (title.equalsIgnoreCase(set.getSeries())) {
+                    tmpSets.add(set);
+                }
+            }
+            series.add(new Series(title, tmpSets));
+        }
     }
 }

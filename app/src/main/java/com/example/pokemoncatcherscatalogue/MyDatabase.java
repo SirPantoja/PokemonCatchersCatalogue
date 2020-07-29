@@ -8,7 +8,7 @@ import models.CardDao;
 import models.Set;
 import models.SetDao;
 
-@Database(entities={Set.class, Card.class}, version=2)
+@Database(entities={Set.class, Card.class}, version=3)
 public abstract class MyDatabase extends RoomDatabase {
     // Declare your data access objects as abstract
     public abstract SetDao setDao();

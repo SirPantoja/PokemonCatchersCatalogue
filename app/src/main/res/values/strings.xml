@@ -40,4 +40,5 @@
     <string name="search">Search</string>
     <string name="search_for_a_card">Search for a card!</string>
     <string name="pokemon_catcher_s_catalogue">Pokemon Catcher\'s Catalogue</string>
+    <string name="series_name">Series Name</string>
 </resources>
