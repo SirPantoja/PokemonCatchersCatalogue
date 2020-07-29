@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +56,7 @@ public class SingleSetActivity extends AppCompatActivity {
     private String logoUrl;
     private ImageView ivSingleLogo;
     private TextView tvEditMode;
+    private ProgressBar pbLoadingSingleSet;
 
 
     @Override
@@ -76,6 +78,7 @@ public class SingleSetActivity extends AppCompatActivity {
         spinnerSort = findViewById(R.id.spinnerSort);
         ivSingleLogo = findViewById(R.id.ivSingleLogo);
         tvEditMode = findViewById(R.id.tvEditMode);
+        pbLoadingSingleSet = findViewById(R.id.pbLoadingSingleSet);
 
         // If not privileged hide UI
         if (!(ParseApplication.perm)) {
@@ -163,6 +166,7 @@ public class SingleSetActivity extends AppCompatActivity {
 
         if (newCards.isEmpty()) {
             // Make the API call for the cards in this set
+            pbLoadingSingleSet.setVisibility(View.VISIBLE);
             getCards(setCode, cards);
         }
     }
@@ -251,11 +255,13 @@ public class SingleSetActivity extends AppCompatActivity {
 
                 // Notify adapter
                 adapter.notifyDataSetChanged();
+                pbLoadingSingleSet.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.e(TAG, "onFailure, Error getting cards", throwable);
+                pbLoadingSingleSet.setVisibility(View.INVISIBLE);
             }
         });
     }

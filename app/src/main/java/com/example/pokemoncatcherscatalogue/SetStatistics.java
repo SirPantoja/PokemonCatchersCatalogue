@@ -8,7 +8,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -50,6 +52,7 @@ public class SetStatistics extends AppCompatActivity {
     private ArrayList<Card> cards;
     private HashMap<String, Card> cardsHash = new HashMap<String, Card>();
     private MissingCardAdapter adapter;
+    private ProgressBar pbSetStatistics;
     private int totalCards;
 
     @Override
@@ -82,6 +85,7 @@ public class SetStatistics extends AppCompatActivity {
         tvCommons2 = findViewById(R.id.tvCommons2);
         tvOther2 = findViewById(R.id.tvOther2);
         rlCards = findViewById(R.id.rlCards);
+        pbSetStatistics = findViewById(R.id.pbSetStatistics);
 
         // Set up cards
         cards = new ArrayList<Card>();
@@ -92,7 +96,8 @@ public class SetStatistics extends AppCompatActivity {
         // Set the layout manager to rlCards
         rlCards.setLayoutManager(new LinearLayoutManager(this));
 
-        // get the cards to populate the recycler view
+        // get the cards to populate the recycler view and start up the progress bar
+        pbSetStatistics.setVisibility(View.VISIBLE);
         getCards(cards);
 
         // Add content to views
@@ -249,6 +254,7 @@ public class SetStatistics extends AppCompatActivity {
                     Card.sort = Card.SORT.NUMBER;
                     Collections.sort(newCards);
                     adapter.addAll(newCards);
+                    pbSetStatistics.setVisibility(View.INVISIBLE);
 
                 } else {
                     Log.d(TAG, "Error: " + e.getMessage());

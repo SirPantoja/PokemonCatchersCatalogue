@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".SetStatistics">
 
+    <ProgressBar
+        android:id="@+id/pbSetStatistics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ivSymbol"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible" />
+
     <TextView
         android:id="@+id/tvMissing"
         android:layout_width="wrap_content"
