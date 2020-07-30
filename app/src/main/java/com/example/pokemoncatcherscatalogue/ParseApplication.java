@@ -9,6 +9,7 @@ import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import models.Deck;
 import models.Friend;
 import models.ParseCard;
 
@@ -33,6 +34,7 @@ public class ParseApplication extends Application {
         // Register custom Parse objects
         ParseObject.registerSubclass(ParseCard.class);
         ParseObject.registerSubclass(Friend.class);
+        ParseObject.registerSubclass(Deck.class);
 
         // set applicationId, and server server based on the values in the Heroku settings.
         // clientKey is not needed unless explicitly configured

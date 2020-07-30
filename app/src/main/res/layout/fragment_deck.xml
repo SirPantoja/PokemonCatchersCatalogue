@@ -30,7 +30,7 @@
         android:text="@string/new_deck" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rlDeck"
+        android:id="@+id/rvDeck"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/btnDeck"
