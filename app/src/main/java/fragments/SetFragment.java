@@ -200,7 +200,6 @@ public class SetFragment extends Fragment {
         while (hmIterator.hasNext()) {
             Map.Entry mapElement = (Map.Entry)hmIterator.next();
             series.add(new Series((String)mapElement.getKey(), (List)mapElement.getValue()));
-            Log.i(TAG, "Adding: " +  (String)mapElement.getKey() + " and: " + ((List)mapElement.getValue()).toString());
         }
     }
 }
