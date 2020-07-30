@@ -31,7 +31,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import models.SetDao;
 import okhttp3.Headers;
@@ -175,22 +178,29 @@ public class SetFragment extends Fragment {
     private void setsToSeries(List<Set> sets) {
         Log.i(TAG, "setsToSeries");
         series.clear();
-        List<String> titles = new ArrayList<>();
+        // Want to preserve series order so use ordered hash map
+        LinkedHashMap<String, List<Set>> titles = new LinkedHashMap<>();
         for (Set set : sets) {
-            if (!(titles.contains(set.getSeries()))) {
+            if (!(titles.containsKey(set.getSeries()))) {
+                // Create a new entry since not already contained
                 Log.i(TAG, "Title: " + set.getSeries());
-                titles.add(set.getSeries());
+                ArrayList<Set> newList = new ArrayList<>();
+                newList.add(set);
+                titles.put(set.getSeries(), newList);
+            } else {
+                // Already contains this series so just add it
+                titles.get(set.getSeries()).add(set);
             }
         }
 
-        for (String title : titles) {
-            List<Set> tmpSets = new ArrayList<Set>();
-            for (Set set : sets) {
-                if (title.equalsIgnoreCase(set.getSeries())) {
-                    tmpSets.add(set);
-                }
-            }
-            series.add(new Series(title, tmpSets));
+        // Getting an iterator
+        Iterator hmIterator = titles.entrySet().iterator();
+
+        // Iterate through the hash map and add to the series object
+        while (hmIterator.hasNext()) {
+            Map.Entry mapElement = (Map.Entry)hmIterator.next();
+            series.add(new Series((String)mapElement.getKey(), (List)mapElement.getValue()));
+            Log.i(TAG, "Adding: " +  (String)mapElement.getKey() + " and: " + ((List)mapElement.getValue()).toString());
         }
     }
 }
