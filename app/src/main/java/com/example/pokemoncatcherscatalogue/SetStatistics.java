@@ -41,15 +41,9 @@ public class SetStatistics extends AppCompatActivity {
 
     public static final String TAG = "SetStatistics";
     private String setCode;
-    private TextView tvTotalCards2;
-    private TextView tvRepeats2;
-    private TextView tvUniqueCards2;
-    private TextView tvRares2;
-    private TextView tvUncommons2;
-    private TextView tvCommons2;
-    private TextView tvOther2;
     private RecyclerView rlCards;
     private ArrayList<Card> cards;
+    private ArrayList<Integer> stats;
     private HashMap<String, Card> cardsHash = new HashMap<String, Card>();
     private MissingCardAdapter adapter;
     private ProgressBar pbSetStatistics;
@@ -75,22 +69,15 @@ public class SetStatistics extends AppCompatActivity {
 
         // Link up views
         ImageView ivSetLogo = findViewById(R.id.ivSetLogo);
-        ImageView ivSymbol = findViewById(R.id.ivSymbol);
         TextView tvSetName = findViewById(R.id.tvSetName);
-        tvTotalCards2 = findViewById(R.id.tvTotalCards2);
-        tvRepeats2 = findViewById(R.id.tvRepeats2);
-        tvUniqueCards2 = findViewById(R.id.tvUniqueCards2);
-        tvRares2 = findViewById(R.id.tvRares2);
-        tvUncommons2 = findViewById(R.id.tvUncommons2);
-        tvCommons2 = findViewById(R.id.tvCommons2);
-        tvOther2 = findViewById(R.id.tvOther2);
         rlCards = findViewById(R.id.rlCards);
         pbSetStatistics = findViewById(R.id.pbSetStatistics);
 
-        // Set up cards
+        // Set up cards and stats
         cards = new ArrayList<Card>();
+        stats = new ArrayList<Integer>();
         // Create the adapter
-        adapter = new MissingCardAdapter(cards);
+        adapter = new MissingCardAdapter(cards, stats);
         // Set the adapter to rlCards
         rlCards.setAdapter(adapter);
         // Set the layout manager to rlCards
@@ -102,7 +89,6 @@ public class SetStatistics extends AppCompatActivity {
 
         // Add content to views
         Glide.with(this).load(logoUrl).into(ivSetLogo);
-        Glide.with(this).load(symbolUrl).into(ivSymbol);
         tvSetName.setText(setName);
     }
 
@@ -228,13 +214,11 @@ public class SetStatistics extends AppCompatActivity {
                         }
                     }
                     // Enter data into views
-                    tvTotalCards2.setText(String.valueOf(total));
-                    tvRepeats2.setText(String.valueOf(total - uniqueCards));
-                    tvUniqueCards2.setText(uniqueCards + "/" + totalCards);
-                    tvRares2.setText(String.valueOf(rares));
-                    tvUncommons2.setText(String.valueOf(uncommons));
-                    tvCommons2.setText(String.valueOf(commons));
-                    tvOther2.setText(String.valueOf(uniqueCards - rares - uncommons - commons));
+                    stats.add(0, total);            // add the total
+                    stats.add(1, uniqueCards);      // add the uniqueCards
+                    stats.add(2, rares);            // add the rares
+                    stats.add(3, uncommons);        // add the uncommons
+                    stats.add(4, commons);          // add the commons
 
                     // Populate the adapter from the data left in the hash map
 
@@ -253,7 +237,7 @@ public class SetStatistics extends AppCompatActivity {
                     adapter.clear();
                     Card.sort = Card.SORT.NUMBER;
                     Collections.sort(newCards);
-                    adapter.addAll(newCards);
+                    adapter.addAll(newCards);           // Also notifies data set has been changed
                     pbSetStatistics.setVisibility(View.INVISIBLE);
 
                 } else {
