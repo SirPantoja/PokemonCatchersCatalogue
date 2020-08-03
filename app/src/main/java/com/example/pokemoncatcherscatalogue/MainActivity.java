@@ -7,23 +7,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
     private TextView etUsername;
     private TextView etPassword;
-    private Button btnLogin;
-    private Button btnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
         // Link up views
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnSignUp = findViewById(R.id.btnSignUp);
+        Button btnLogin = findViewById(R.id.btnLogin);
+        TextView tvSignUp = findViewById(R.id.tvSignUp);
+        ImageView ivAppLogo = findViewById(R.id.ivAppLogo);
+        ImageView ivLogin = findViewById(R.id.ivLogin);
 
         // Set up Login on click listener
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -53,50 +52,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        // Set on click listener for account creation
+        tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO put the infrastructure for signing up
-                Toast.makeText(MainActivity.this, "Sign Up clicked", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Sign up button clicked");
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                signUp(username, password);
+                Intent intent = new Intent(MainActivity.this, CreateAccountActivity.class);
+                startActivity(intent);
             }
         });
 
-    }
-
-    private void signUp(String username, String password) {
-        // Basic error checking
-        if (username.isEmpty() || password.isEmpty()) {
-            Log.e(TAG, "Empty fields");
-            Toast.makeText(this, "Fields cannot be blank", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Create a new Parse user
-        ParseUser user = new ParseUser();
-
-        // Set its fields
-        user.setUsername(username);
-        user.setPassword(password);
-
-        // Sign up the user in background and then redirect to home activity
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error with signing in", e);
-                    return;
-                }
-                // Signed up successfully
-                Log.i(TAG, "Signed up successfully");
-                Toast.makeText(MainActivity.this, "Signed Up!", Toast.LENGTH_SHORT).show();
-                goHomeActivity();
-            }
-        });
-
+        // Load data into views
+        Glide.with(this).load("https://fontmeme.com/permalink/200803/f5edcafae3119c2e7c3cfd7d4bffcf14.png").into(ivAppLogo);
+        Glide.with(this).load("https://images.nintendolife.com/37adf99e39e4d/pokemon-tcg.original.jpg").into((ivLogin));
     }
 
     private void login(String username, String password) {
@@ -128,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // super.onBackPressed();
         Toast.makeText(this,"There is no back action",Toast.LENGTH_LONG).show();
     }
 }

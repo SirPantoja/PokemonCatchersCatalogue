@@ -45,4 +45,9 @@
     <string name="enter_your_bio">Enter your bio!</string>
     <string name="new_deck">New deck</string>
     <string name="image_of_deck_cover">Image of deck cover</string>
+    <string name="no_account_yet_click_here_to_make_one">No account yet? Click here to make one!</string>
+    <string name="tcg_image">TCG image</string>
+    <string name="app_title">App title</string>
+    <string name="password_confirmation">password confirmation</string>
+    <string name="already_a_member_login_here">Already a member? Login here</string>
 </resources>

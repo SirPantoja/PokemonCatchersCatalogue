@@ -8,6 +8,17 @@
     tools:context=".MainActivity">
 
 
+    <TextView
+        android:id="@+id/tvLoginBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnSignUp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/already_a_member_login_here"
+        android:textSize="20sp" />
+
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
@@ -37,13 +48,15 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etPassword"
+        android:layout_below="@+id/etConfirmation"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
-        android:text="@string/login" />
+        android:layout_marginEnd="25dp"
+        android:text="@string/sign_up" />
 
     <ImageView
         android:id="@+id/ivAppLogo"
@@ -56,21 +69,25 @@
     <ImageView
         android:id="@+id/ivLogin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tvSignUp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnSignUp"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="85dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="70dp"
         tools:srcCompat="@tools:sample/avatars"
         android:contentDescription="@string/tcg_image" />
 
-    <TextView
-        android:id="@+id/tvSignUp"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/etConfirmation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnLogin"
-        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/etPassword"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:text="@string/no_account_yet_click_here_to_make_one"
-        android:textSize="20sp" />
+        android:ems="10"
+        android:hint="@string/password_confirmation"
+        android:inputType="textPassword"
+        android:autofillHints="@string/password_confirmation" />
 </RelativeLayout>
