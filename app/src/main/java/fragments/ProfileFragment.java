@@ -119,7 +119,7 @@ public class ProfileFragment extends Fragment {
         ParseUser user = ParseUser.getCurrentUser();
         tvUsername.setText(user.getUsername());
         etBio.setText(user.getString("bio"));
-        Glide.with(view).load(user.getParseFile("profilePic").getUrl()).centerCrop().into(ivProfile);
+        Glide.with(view).load(user.getParseFile("profilePic").getUrl()).into(ivProfile);
     }
 
     @Override
@@ -179,8 +179,6 @@ public class ProfileFragment extends Fragment {
                 ParseUser.getCurrentUser().put("profilePic", parseFile);
                 ParseUser.getCurrentUser().saveInBackground();
                 // Load the image into a view
-                //Log.i(TAG, "Loading in image: " + parseFile.toString());
-                //Glide.with(context).load(parseFile.getUrl()).centerCrop().into(ivProfile);
             } else { // Result was a failure
                 Toast.makeText(context, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
