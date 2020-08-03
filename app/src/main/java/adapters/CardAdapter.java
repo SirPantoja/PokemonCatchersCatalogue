@@ -1,5 +1,6 @@
 package adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,12 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
@@ -30,17 +28,14 @@ import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import models.Card;
 import models.ParseCard;
-import models.Set;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     public static final String TAG = "CardAdapter";
-    private static final long FADE_DURATION = 500;
     private List<Card> cards;
     private Context context;
 
@@ -58,10 +53,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         View cardView = inflater.inflate(R.layout.card_item, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(cardView);
-        return viewHolder;
+        return new ViewHolder(cardView);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull CardAdapter.ViewHolder holder, int position) {
         // Get the right card based off position
@@ -109,7 +104,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                     // Use an intent to go the CardDetailsActivity since we are not in edit mode
                     Intent intent = new Intent(context, CardDetailsActivity.class);
                     intent.putExtra("card", Parcels.wrap(card));
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, (View)ivCard, "Image of card");
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, ivCard, "Image of card");
                     context.startActivity(intent, options.toBundle());
                 }
             }
@@ -210,12 +205,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     // Clears the adapter
     public void clear() {
         cards.clear();
-        notifyDataSetChanged();
-    }
-
-    // Adds all the elements from the given list to the data set
-    public void addAll(ArrayList<Card> cards) {
-        this.cards.addAll(cards);
         notifyDataSetChanged();
     }
 }
