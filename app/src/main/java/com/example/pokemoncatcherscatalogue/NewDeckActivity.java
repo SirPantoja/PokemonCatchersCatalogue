@@ -4,11 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -16,9 +24,10 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import adapters.ListAdapter;
-import models.Card;
+import models.Deck;
 import models.Listener;
 import models.ParseCard;
 
@@ -35,7 +44,16 @@ public class NewDeckActivity extends AppCompatActivity implements Listener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_deck);
 
+        // Link up views
         Switch switchScroll = findViewById(R.id.switch1);
+        ImageView ivDeckLogo = findViewById(R.id.ivDeckLogo);
+        ImageView ivProfileDeck = findViewById(R.id.ivProfileDeck);
+        Button btnSaveDeck = findViewById(R.id.btnSaveDeck);
+        final EditText etDeckName = findViewById(R.id.etDeckName);
+
+        // Load the image with Glide
+        Glide.with(this).load("https://cdn1.dotesports.com/wp-content/uploads/2020/02/22021537/494815920e06ed9b01f27f4a03da4033.jpg").into(ivDeckLogo);
+        Glide.with(this).load(Objects.requireNonNull(ParseUser.getCurrentUser().getParseFile("profilePic")).getUrl()).into(ivProfileDeck);
 
         // Set up switch listener
         switchScroll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -56,24 +74,45 @@ public class NewDeckActivity extends AppCompatActivity implements Listener {
         // Set up the second RecyclerView
         RecyclerView rvDeckCards = findViewById(R.id.rvDeckCards);
         rvDeckCards.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        List<ParseCard> cards2 = new ArrayList<>();
+        final List<ParseCard> cards2 = new ArrayList<>();
         ListAdapter deckCardsAdapter = new ListAdapter(cards2, this);
         rvDeckCards.setAdapter(deckCardsAdapter);
         rvDeckCards.setOnDragListener(deckCardsAdapter.getDragInstance());
 
         // Query Parse to getCards and load them into the adapter
         getParseCards();
+
+        // Set on click listener for the save deck button
+        btnSaveDeck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "Save deck clicked");
+                // Error checking
+                if (cards2.size() > 60) {
+                    Toast.makeText(NewDeckActivity.this, "More than 60 cards added to the deck", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (etDeckName.getText().toString().isEmpty()) {
+                    Toast.makeText(NewDeckActivity.this, "Must provide a deck name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                saveDeck(cards2, etDeckName.getText().toString());
+                Intent intent = new Intent(NewDeckActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void saveDeck(List<ParseCard> cards2, String deckName) {
+        Deck deck = new Deck(ParseUser.getCurrentUser(), cards2, deckName);
+        deck.saveInBackground();
     }
 
     @Override
-    public void setEmptyListTop(boolean visibility) {
-
-    }
+    public void setEmptyListTop(boolean visibility) { }
 
     @Override
-    public void setEmptyListBottom(boolean visibility) {
-
-    }
+    public void setEmptyListBottom(boolean visibility) { }
 
     private void getParseCards() {
         // Query Parse and get all the cards and put them into the list
@@ -87,9 +126,13 @@ public class NewDeckActivity extends AppCompatActivity implements Listener {
         query.findInBackground(new FindCallback<ParseCard>() {
             @Override
             public void done(List<ParseCard> objects, ParseException e) {
-                cards.addAll(objects);
                 for (ParseCard card : objects) {
                     Log.i(TAG, card.getName() + card.getUrl());
+                    if (card.getCount() >= 1) {
+                        for (int i = 0; i < card.getCount(); i++) {
+                            cards.add(new ParseCard(card));
+                        }
+                    }
                 }
                 userCardsAdapter.notifyDataSetChanged();
             }

@@ -5,7 +5,6 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @ParseClassName("Deck")
@@ -14,10 +13,9 @@ public class Deck extends ParseObject {
     // Default public constructor
     public Deck() { }
 
-    public Deck(ParseUser owner, ArrayList<Card> cards, ParseFile deckCover, String deckName) {
+    public Deck(ParseUser owner, List<ParseCard> cards, String deckName) {
         setOwner(owner);
         setCards(cards);
-        setDeckCover(deckCover);
         setDeckName(deckName);
     }
 
@@ -25,7 +23,7 @@ public class Deck extends ParseObject {
         put("owner", owner);
     }
 
-    public void setCards(ArrayList<Card> cards) {
+    public void setCards(List<ParseCard> cards) {
         addAll("cards", cards);
     }
 

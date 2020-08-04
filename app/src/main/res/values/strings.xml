@@ -52,4 +52,5 @@
     <string name="already_a_member_login_here">Already a member? Login here</string>
     <string name="scroll_mode">Scroll Mode</string>
     <string name="save_deck">SAVE DECK</string>
+    <string name="deck_count">0/60 Cards</string>
 </resources>

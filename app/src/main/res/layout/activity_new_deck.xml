@@ -21,8 +21,10 @@
         android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
+        android:layout_toEndOf="@+id/ivProfileDeck"
         android:contentDescription="@string/image_of_logo"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -54,13 +56,28 @@
         android:layout_marginTop="10dp"
         android:text="@string/save_deck" />
 
-    <TextView
-        android:id="@+id/tvDeckCount"
+    <ImageView
+        android:id="@+id/ivProfileDeck"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:contentDescription="@string/profile_pic"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <EditText
+        android:id="@+id/etDeckName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivDeckLogo"
-        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        tools:text="Deck Count" />
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/switch1"
+        android:layout_toEndOf="@+id/btnSaveDeck"
+        android:ems="10"
+        android:hint="Deck Name"
+        android:inputType="textPersonName" />
 
 </RelativeLayout>

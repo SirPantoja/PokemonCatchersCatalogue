@@ -22,6 +22,18 @@ public class ParseCard extends ParseObject {
         setUrl(url);
     }
 
+    // Clone constructor
+    public ParseCard(ParseCard card) {
+        setSetName(card.getSetName());
+        setSetNumber(card.getSetNumber());
+        setOwner(card.getOwner());
+        setCount(card.getCount());
+        setName(card.getName());
+        setCardId(card.getCardId());
+        setRarity(card.getRarity());
+        setUrl(card.getUrl());
+    }
+
     public String getSetName() {
         return getString("setName");
     }
