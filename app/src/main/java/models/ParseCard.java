@@ -11,7 +11,7 @@ public class ParseCard extends ParseObject {
     // Default public constructor
     public ParseCard() { }
 
-    public ParseCard(String setName, int setNumber, ParseUser owner, int count, String name, String cardId, int rarity) {
+    public ParseCard(String setName, int setNumber, ParseUser owner, int count, String name, String cardId, int rarity, String url) {
         setSetName(setName);
         setSetNumber(setNumber);
         setOwner(owner);
@@ -19,6 +19,7 @@ public class ParseCard extends ParseObject {
         setName(name);
         setCardId(cardId);
         setRarity(rarity);
+        setUrl(url);
     }
 
     public String getSetName() {
@@ -92,5 +93,13 @@ public class ParseCard extends ParseObject {
 
     public void setRarity(int rarity) {
         put("rarity", rarity);
+    }
+
+    public String getUrl() {
+        return getString("url");
+    }
+
+    public void setUrl(String url) {
+        put("url", url);
     }
 }

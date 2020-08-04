@@ -131,7 +131,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                     // Access the array of results here
                     if (itemList.isEmpty()) {
                         // This means this card doesn't already exist so we need to create it
-                        ParseCard parseCard = new ParseCard(card.setCode, card.number, ParseUser.getCurrentUser(), 1, card.name, card.id, card.rarity);
+                        ParseCard parseCard = new ParseCard(card.setCode, card.number, ParseUser.getCurrentUser(), 1, card.name, card.id, card.rarity, card.url);
                         parseCard.saveInBackground();
                     } else {
                         // This means we found the card so we just need to increment it

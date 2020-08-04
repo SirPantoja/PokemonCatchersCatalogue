@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlCardItem"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvCardName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        tools:layout_editor_absoluteX="37dp"
+        tools:layout_editor_absoluteY="41dp"
+        tools:text="NAME OF CARD" />
+
+    <ImageView
+        android:id="@+id/ivCardView"
+        android:layout_width="125dp"
+        android:layout_height="160dp"
+        android:layout_below="@+id/tvCardName"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/image_of_card"
+        tools:srcCompat="@tools:sample/avatars" />
+</RelativeLayout>

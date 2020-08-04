@@ -93,7 +93,7 @@ public class SingleSetActivity extends AppCompatActivity {
         btnEditToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                SingleSetActivity.isChecked = isChecked;            // Perhaps not the most idiomatic, TODO change this up to be better
+                SingleSetActivity.isChecked = isChecked;            // Perhaps not the most idiomatic,
                 adapter.notifyDataSetChanged();
             }
         });
