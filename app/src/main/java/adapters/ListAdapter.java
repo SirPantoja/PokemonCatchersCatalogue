@@ -38,6 +38,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         this.listener = listener;
     }
 
+    public ListAdapter(List<ParseCard> list) {
+        this.list = list;
+    }
+
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(

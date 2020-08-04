@@ -43,6 +43,7 @@ public class NewDeckActivity extends AppCompatActivity implements Listener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_deck);
+        scroll = true;
 
         // Link up views
         Switch switchScroll = findViewById(R.id.switch1);

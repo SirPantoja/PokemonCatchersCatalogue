@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CreateAccountActivity"></activity>
+        <activity android:name=".DeckViewActivity"></activity>
+        <activity android:name=".CreateAccountActivity" />
         <activity android:name=".NewDeckActivity" />
         <activity android:name=".SetStatistics" />
         <activity android:name=".CardDetailsActivity" />

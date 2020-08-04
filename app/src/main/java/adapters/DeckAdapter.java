@@ -1,6 +1,7 @@
 package adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.pokemoncatcherscatalogue.DeckViewActivity;
 import com.example.pokemoncatcherscatalogue.R;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -44,7 +48,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull DeckAdapter.ViewHolder holder, int position) {
         // Get the correct deck based on position
-        Deck deck = decks.get(position);
+        final Deck deck = decks.get(position);
 
         // Link up views
         ImageView ivDeckCover = holder.ivDeckCover;
@@ -60,6 +64,10 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Deck Clicked!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, DeckViewActivity.class);
+                intent.putExtra("deckName", deck.getDeckName());
+                intent.putExtra("createdAt", deck.getCreatedAt());
+                context.startActivity(intent);
             }
         });
     }

@@ -5,6 +5,8 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
 @ParseClassName("Deck")
@@ -39,7 +41,7 @@ public class Deck extends ParseObject {
         return getParseUser("owner");
     }
 
-    public List<Card> getCards() {
+    public List<ParseCard> getCards() {
         return getList("cards");
     }
 
