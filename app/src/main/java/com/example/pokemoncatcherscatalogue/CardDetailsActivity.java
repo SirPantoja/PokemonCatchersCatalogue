@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -78,7 +79,7 @@ public class CardDetailsActivity extends AppCompatActivity {
         // Fill up the views
         assert card != null;
         tvCardName.setText(card.name);
-        Glide.with(this).load(card.url).into(ivCardDetails);
+        Glide.with(this).load(card.url).transform(new RoundedCorners(15)).into(ivCardDetails);
         // Call get new card to get the attack data
         getNewCard(card.number, card.setCode);
 
@@ -284,7 +285,7 @@ public class CardDetailsActivity extends AppCompatActivity {
                 tvAttacks.setText(card.text);
 
                 tvCardName.setText(card.name);
-                Glide.with(CardDetailsActivity.this).load(card.url).into(ivCardDetails);
+                Glide.with(CardDetailsActivity.this).load(card.url).transform(new RoundedCorners(15)).into(ivCardDetails);
             }
 
             @Override

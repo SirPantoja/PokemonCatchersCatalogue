@@ -22,6 +22,7 @@ public class SetViewHolder extends ChildViewHolder {
     private static final long FADE_DURATION = 1250;
     private TextView tvSetName;
     private ImageView ivLogo;
+    private ImageView ivSymbol;
     private RelativeLayout rlSet;
     private Button btnStatistics;
     private Context context;
@@ -35,6 +36,7 @@ public class SetViewHolder extends ChildViewHolder {
         // Link up views
         tvSetName = itemView.findViewById(R.id.tvSetName);
         ivLogo = itemView.findViewById(R.id.ivLogo);
+        ivSymbol = itemView.findViewById(R.id.ivSymbol);
         rlSet = itemView.findViewById(R.id.rlSet);
         btnStatistics = itemView.findViewById(R.id.btnStatistics);
     }
@@ -44,6 +46,7 @@ public class SetViewHolder extends ChildViewHolder {
         tvSetName.setText(set.getName());
         tvSetName.setText(set.getName());
         Glide.with(context).load(set.getLogoUrl()).into(ivLogo);
+        Glide.with(context).load(set.getSymbolUrl()).into(ivSymbol);
 
         // Set up the on click listener for rlSet
         rlSet.setOnClickListener(new View.OnClickListener() {

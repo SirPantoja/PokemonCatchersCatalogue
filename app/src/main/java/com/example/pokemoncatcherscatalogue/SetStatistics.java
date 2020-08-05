@@ -68,7 +68,7 @@ public class SetStatistics extends AppCompatActivity {
         }
 
         // Link up views
-        ImageView ivSetLogo = findViewById(R.id.ivSetLogo);
+        ImageView ivSetLogo = findViewById(R.id.ivSymbol);
         TextView tvSetName = findViewById(R.id.tvSetName);
         rlCards = findViewById(R.id.rlCards);
         pbSetStatistics = findViewById(R.id.pbSetStatistics);

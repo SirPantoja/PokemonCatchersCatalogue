@@ -22,11 +22,12 @@
 
     <TextView
         android:id="@+id/tvSetName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:layout_toStartOf="@+id/ivSymbol"
         android:layout_toEndOf="@+id/ivLogo"
         tools:text="Set Name" />
 
@@ -39,4 +40,15 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="-110dp"
         android:text="@string/stats" />
+
+    <ImageView
+        android:id="@+id/ivSymbol"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        tools:srcCompat="@tools:sample/avatars"
+        android:contentDescription="@string/image_of_logo" />
 </RelativeLayout>

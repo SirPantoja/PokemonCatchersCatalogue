@@ -67,7 +67,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         TextView tvCardName = holder.tvCardName;
         tvCardName.setText(card.name);
         TextView tvCount = holder.tvCount;
-        tvCount.setText("Count: " + card.count);
+        tvCount.setText("Number Owned: " + card.count);
         final ImageView ivCard = holder.ivCard;
         Glide.with(context).load(card.url).transform(new RoundedCorners(15)).into(ivCard);
         Button btnAdd = holder.btnAdd;
