@@ -17,6 +17,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.pokemoncatcherscatalogue.CardDetailsActivity;
 import com.example.pokemoncatcherscatalogue.ParseApplication;
 import com.example.pokemoncatcherscatalogue.R;
@@ -68,7 +69,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         TextView tvCount = holder.tvCount;
         tvCount.setText("Count: " + card.count);
         final ImageView ivCard = holder.ivCard;
-        Glide.with(context).load(card.url).into(ivCard);
+        Glide.with(context).load(card.url).transform(new RoundedCorners(15)).into(ivCard);
         Button btnAdd = holder.btnAdd;
         Button btnSub = holder.btnSub;
 
