@@ -44,6 +44,7 @@ public class NewDeckActivity extends AppCompatActivity implements Listener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_deck);
         scroll = true;
+        Toast.makeText(this, "Drag cards down to add to your deck", Toast.LENGTH_SHORT).show();
 
         // Link up views
         Switch switchScroll = findViewById(R.id.switch1);

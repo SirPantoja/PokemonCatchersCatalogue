@@ -65,7 +65,6 @@ public class DeckFragment extends Fragment {
         btnDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "New deck!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, NewDeckActivity.class);
                 context.startActivity(intent);
             }

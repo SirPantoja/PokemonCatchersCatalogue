@@ -50,9 +50,10 @@
         android:layout_marginTop="10dp"
         android:autofillHints="Bio"
         android:hint="@string/enter_your_bio"
+        android:maxLines="5"
         android:textSize="30sp"
         tools:text="This is a bio!"
-        android:inputType="text" />
+        android:inputType="text|textMultiLine" />
 
     <Button
         android:id="@+id/btnUpdate"
