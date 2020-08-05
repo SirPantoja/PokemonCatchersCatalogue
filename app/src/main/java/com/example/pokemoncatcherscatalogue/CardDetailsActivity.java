@@ -275,9 +275,7 @@ public class CardDetailsActivity extends AppCompatActivity {
                             attack = object.getString("name") + ": " + object.getString("text") + "\n\n";
                         }
                         card.text = card.text.concat(attack);
-                        Log.i(TAG, "attack: " + attack);
                     }
-                    Log.i(TAG, "attacks " + arr.toString());
                 } catch (JSONException e) {
                     Log.i(TAG, "Failure of attacks", e);
                 }
