@@ -56,4 +56,16 @@
         android:gravity="clip_horizontal|center_horizontal"
         android:text="@string/turn_on_custom_image" />
 
+    <TextView
+        android:id="@+id/tvAttacks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/switchCardDetails"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:maxLines="10"
+        android:textSize="24sp"
+        tools:text="Attacks" />
+
 </RelativeLayout>

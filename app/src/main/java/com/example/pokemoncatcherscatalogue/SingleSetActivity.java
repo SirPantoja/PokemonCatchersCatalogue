@@ -238,6 +238,14 @@ public class SingleSetActivity extends AppCompatActivity {
                         // Do nothing; it is expected that some cards do not have this
                     }
 
+                    // Get the optional parameter of text
+                    try {
+                        JSONArray arr = jsonArray.getJSONObject(i).getJSONArray("attacks");
+                        Log.i(TAG, "attacks " + arr.toString());
+                    } catch (JSONException e) {
+                        Log.i(TAG, "Failure of attacks");
+                    }
+
                     // Add the new card to the list of cards for the adapter
                     cards.add(card);
                     newCards.add(card);

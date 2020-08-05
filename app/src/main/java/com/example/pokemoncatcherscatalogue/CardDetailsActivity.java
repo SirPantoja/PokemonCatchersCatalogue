@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,7 +29,6 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,8 +36,6 @@ import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import models.Card;
@@ -51,9 +47,7 @@ public class CardDetailsActivity extends AppCompatActivity {
     public static final String TAG = "CardDetailsActivity";
     private ImageView ivCardDetails;
     private TextView tvCardName;
-    private Button btnTakePic;
-    private Switch switchCardDetails;
-    private RelativeLayout rlCardDetails;
+    private TextView tvAttacks;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public String photoFileName = "photo.jpg";
     File photoFile;
@@ -68,9 +62,10 @@ public class CardDetailsActivity extends AppCompatActivity {
         // Link up views
         ivCardDetails = findViewById(R.id.ivCardDetails);
         tvCardName = findViewById(R.id.tvCardName);
-        btnTakePic = findViewById(R.id.btnTakePic);
-        switchCardDetails = findViewById(R.id.switchCardDetails);
-        rlCardDetails = findViewById(R.id.rlCardDetails);
+        tvAttacks = findViewById(R.id.tvAttacks);
+        Button btnTakePic = findViewById(R.id.btnTakePic);
+        Switch switchCardDetails = findViewById(R.id.switchCardDetails);
+        RelativeLayout rlCardDetails = findViewById(R.id.rlCardDetails);
 
         // Hide views if not privileged
         if (!(ParseApplication.perm)) {
@@ -78,12 +73,14 @@ public class CardDetailsActivity extends AppCompatActivity {
         }
 
         // Get the intent
-        Intent intent = getIntent();
         card = Parcels.unwrap(getIntent().getParcelableExtra("card"));
 
         // Fill up the views
+        assert card != null;
         tvCardName.setText(card.name);
         Glide.with(this).load(card.url).into(ivCardDetails);
+        // Call get new card to get the attack data
+        getNewCard(card.number, card.setCode);
 
         // Set on click listener for btnTakePic
         btnTakePic.setOnClickListener(new View.OnClickListener() {
@@ -193,9 +190,8 @@ public class CardDetailsActivity extends AppCompatActivity {
         }
 
         // Return the file target for the photo based on filename
-        File file = new File(mediaStorageDir.getPath() + File.separator + photoFileName);
 
-        return file;
+        return new File(mediaStorageDir.getPath() + File.separator + photoFileName);
     }
 
     @Override
@@ -265,6 +261,30 @@ public class CardDetailsActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                // Get the optional parameter of text
+                card.text = "";
+                try {
+                    JSONArray arr = json.jsonObject.getJSONArray("cards").getJSONObject(0).getJSONArray("attacks");
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject object = arr.getJSONObject(i);
+                        String attack;
+                        if (object.getString("text").isEmpty()) {
+                            attack = object.getString("name") + "\n\n";
+                        } else {
+                            attack = object.getString("name") + ": " + object.getString("text") + "\n\n";
+                        }
+                        card.text = card.text.concat(attack);
+                        Log.i(TAG, "attack: " + attack);
+                    }
+                    Log.i(TAG, "attacks " + arr.toString());
+                } catch (JSONException e) {
+                    Log.i(TAG, "Failure of attacks", e);
+                }
+
+                Log.i(TAG, "final text: " + card.text);
+                tvAttacks.setText(card.text);
+
                 tvCardName.setText(card.name);
                 Glide.with(CardDetailsActivity.this).load(card.url).into(ivCardDetails);
             }

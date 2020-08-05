@@ -6,7 +6,11 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
 import org.parceler.Parcel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Parcel
 @Entity
@@ -43,12 +47,14 @@ public class Card implements Comparable<Card> {
     public int rarity = 0;
     @ColumnInfo
     public String type = "none";
+    @Ignore
+    public String text = "";
 
     // Required empty public constructor
     public Card () { }
 
     @Ignore
-    public Card (String name, String id, String url, String setCode) {
+    public Card (String name, @NotNull String id, String url, String setCode) {
         this.name = name;
         this.id = id;
         this.url = url;
