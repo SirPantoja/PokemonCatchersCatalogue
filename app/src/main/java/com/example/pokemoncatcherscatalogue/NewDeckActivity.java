@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -54,8 +55,8 @@ public class NewDeckActivity extends AppCompatActivity implements Listener {
         final EditText etDeckName = findViewById(R.id.etDeckName);
 
         // Load the image with Glide
-        Glide.with(this).load("https://cdn1.dotesports.com/wp-content/uploads/2020/02/22021537/494815920e06ed9b01f27f4a03da4033.jpg").into(ivDeckLogo);
-        Glide.with(this).load(Objects.requireNonNull(ParseUser.getCurrentUser().getParseFile("profilePic")).getUrl()).into(ivProfileDeck);
+        Glide.with(this).load("https://cdn1.dotesports.com/wp-content/uploads/2020/02/22021537/494815920e06ed9b01f27f4a03da4033.jpg").transform(new RoundedCorners(40)).into(ivDeckLogo);
+        Glide.with(this).load(Objects.requireNonNull(ParseUser.getCurrentUser().getParseFile("profilePic")).getUrl()).transform(new RoundedCorners(40)).into(ivProfileDeck);
 
         // Set up switch listener
         switchScroll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

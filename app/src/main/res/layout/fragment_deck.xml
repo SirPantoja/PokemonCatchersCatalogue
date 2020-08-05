@@ -15,6 +15,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:transitionName="@string/tcg_image"
         android:contentDescription="@string/image_of_logo"
         android:layout_toStartOf="@+id/btnDeck"
         tools:src="@tools:sample/avatars" />

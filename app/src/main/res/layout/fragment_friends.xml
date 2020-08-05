@@ -4,12 +4,20 @@
     android:layout_height="match_parent"
     tools:context="fragments.FriendsFragment">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_below="@id/etFriendUsername"
+        android:layout_height="match_parent">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFriends"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/etFriendUsername"
         android:layout_marginTop="10dp" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <EditText
         android:id="@+id/etFriendUsername"
@@ -32,5 +40,6 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:textAllCaps="false"
         android:text="@string/add" />
 </RelativeLayout>

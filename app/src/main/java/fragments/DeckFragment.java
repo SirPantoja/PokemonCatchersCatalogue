@@ -1,11 +1,13 @@
 package fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -54,19 +57,20 @@ public class DeckFragment extends Fragment {
         context = getContext();
 
         // Link up views
-        ImageView ivDeck = view.findViewById(R.id.ivDeck);
+        final ImageView ivDeck = view.findViewById(R.id.ivDeck);
         Button btnDeck = view.findViewById(R.id.btnDeck);
         RecyclerView rvDeck = view.findViewById(R.id.rvDeck);
 
         // Load data into views
-        Glide.with(context).load("https://cdn1.dotesports.com/wp-content/uploads/2020/02/22021537/494815920e06ed9b01f27f4a03da4033.jpg").into(ivDeck);
+        Glide.with(context).load("https://cdn1.dotesports.com/wp-content/uploads/2020/02/22021537/494815920e06ed9b01f27f4a03da4033.jpg").transform(new RoundedCorners(25)).into(ivDeck);
 
         // Set on click listener for btnDeck
         btnDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, NewDeckActivity.class);
-                context.startActivity(intent);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, ivDeck, "TCG image");
+                context.startActivity(intent, options.toBundle());
             }
         });
 
