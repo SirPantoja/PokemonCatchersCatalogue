@@ -55,6 +55,10 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
 
+        // Play the music
+        assert context != null;
+        ((ParseApplication)context.getApplicationContext()).startMediaPlayer(R.raw.home);
+
         // Link up views
         Button btnLogout = view.findViewById(R.id.btnLogout);
         Button btnUpdate = view.findViewById(R.id.btnUpdate);

@@ -57,6 +57,10 @@ public class SetFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
 
+        // Play the music
+        assert context != null;
+        ((ParseApplication)context.getApplicationContext()).startMediaPlayer(R.raw.pokemon_center);
+
         // Set up the data access object
         assert context != null;
         setDao = ((ParseApplication) context.getApplicationContext()).getMyDatabase().setDao();
@@ -193,7 +197,6 @@ public class SetFragment extends Fragment {
         }
 
         // Getting an iterator
-
         // Iterate through the hash map and add to the series object
         for (Map.Entry<String, List<Set>> stringListEntry : titles.entrySet()) {
             Map.Entry mapElement = (Map.Entry) stringListEntry;

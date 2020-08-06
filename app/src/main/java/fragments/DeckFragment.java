@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.pokemoncatcherscatalogue.NewDeckActivity;
+import com.example.pokemoncatcherscatalogue.ParseApplication;
 import com.example.pokemoncatcherscatalogue.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -50,6 +51,10 @@ public class DeckFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
+
+        // Play the music
+        assert context != null;
+        ((ParseApplication)context.getApplicationContext()).startMediaPlayer(R.raw.pokemon_gym);
 
         // Link up views
         final ImageView ivDeck = view.findViewById(R.id.ivDeck);
@@ -116,4 +121,5 @@ public class DeckFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_deck, container, false);
     }
+
 }

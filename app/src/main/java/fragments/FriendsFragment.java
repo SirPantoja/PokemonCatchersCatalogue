@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.pokemoncatcherscatalogue.ParseApplication;
 import com.example.pokemoncatcherscatalogue.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -45,6 +46,10 @@ public class FriendsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Context context = getContext();
+
+        // Play music
+        assert context != null;
+        ((ParseApplication)context.getApplicationContext()).startMediaPlayer(R.raw.ss_anne);
 
         // Set up the Recycler View and other views
         RecyclerView rvFriends = view.findViewById(R.id.rvFriends);

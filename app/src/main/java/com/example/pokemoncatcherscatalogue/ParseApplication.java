@@ -1,6 +1,7 @@
 package com.example.pokemoncatcherscatalogue;
 
 import android.app.Application;
+import android.media.MediaPlayer;
 
 import androidx.room.Room;
 
@@ -20,6 +21,7 @@ public class ParseApplication extends Application {
     AsyncHttpClient client;
     ParseUser guestUser;            // Obtained when accessing a friend's collection
     public static boolean perm = true;     // Permissions to edit user collection; only false when viewing a friend's collection
+    MediaPlayer player;
 
     @Override
     public void onCreate() {
@@ -43,6 +45,13 @@ public class ParseApplication extends Application {
                 .applicationId("pokemon-catchers-catalogue") // should correspond to APP_ID env variable
                 .clientKey("pcc2020")  // set explicitly unless clientKey is explicitly configured on Parse server
                 .server("https://pokemon-catchers-catalogue.herokuapp.com/parse/").build());
+    }
+
+    public void stopMediaPlayer() {
+        if (player != null) {
+            player.release();
+            player = null;
+        }
     }
 
     public MyDatabase getMyDatabase() {
@@ -73,5 +82,22 @@ public class ParseApplication extends Application {
         } else {
             return getGuestUser();
         }
+    }
+
+    public void startMediaPlayer(int file) {
+        // Make sure the player is null and stopped
+        if (player != null) {
+            stopMediaPlayer();
+        }
+        // Instantiate the player and play the new song
+        player = MediaPlayer.create(this, file);
+        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                // Repeat ad infinitum
+                player.start();
+            }
+        });
+        player.start();
     }
 }

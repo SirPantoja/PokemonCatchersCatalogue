@@ -46,6 +46,10 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
 
+        // Play the music
+        assert context != null;
+        ((ParseApplication)context.getApplicationContext()).startMediaPlayer(R.raw.lab);
+
         // Link up views
         RecyclerView rvSearch = view.findViewById(R.id.rvSearch);
         Button btnSearch = view.findViewById(R.id.btnSearch);
