@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -25,11 +28,15 @@ public class DeckViewActivity extends AppCompatActivity {
     public static final String TAG = "DeckViewActivity";
     private List<ParseCard> cards;
     private ListAdapter adapter;
+    private Deck deck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_view);
+
+        // Link up views
+        Button btnDeleteDeck = findViewById(R.id.btnDeleteDeck);
 
         // Set up the RecyclerView
         RecyclerView rvDeckCards = findViewById(R.id.rvDeckCards);
@@ -46,6 +53,25 @@ public class DeckViewActivity extends AppCompatActivity {
         // Set scroll to false
         NewDeckActivity.scroll = false;
         getDeck(deckName);
+
+        // Set on click listener for btnDeleteDeck
+        btnDeleteDeck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Delete the deck and return by intent
+                deck.deleteInBackground(new DeleteCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Intent intent = new Intent(DeckViewActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                        } else {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     private void getDeck(String deckName) {
@@ -59,7 +85,7 @@ public class DeckViewActivity extends AppCompatActivity {
         query.findInBackground(new FindCallback<Deck>() {
             @Override
             public void done(List<Deck> objects, ParseException e) {
-                Deck deck = objects.get(0);
+                deck = objects.get(0);
                 List<ParseCard> cards2 = deck.getCards();
                 for (ParseCard card : cards2) {
                     try {

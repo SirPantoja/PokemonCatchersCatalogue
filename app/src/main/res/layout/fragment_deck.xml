@@ -38,4 +38,13 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/tvNoDecks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="380dp"
+        android:text="@string/no_decks_to_show" />
 </RelativeLayout>

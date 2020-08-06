@@ -54,4 +54,6 @@
     <string name="save_deck">SAVE DECK</string>
     <string name="deck_count">0/60 Cards</string>
     <string name="pokeball">pokeball</string>
+    <string name="no_decks_to_show">No decks to show...</string>
+    <string name="delete_deck">Delete Deck</string>
 </resources>

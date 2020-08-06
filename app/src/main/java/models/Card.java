@@ -1,5 +1,6 @@
 package models;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -25,6 +26,7 @@ public class Card implements Comparable<Card> {
     public String name;
     @ColumnInfo
     @PrimaryKey
+    @NonNull
     public String id;                                    // Unique identifier for each card
     @ColumnInfo
     public String url;

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -39,6 +40,7 @@ public class DeckFragment extends Fragment {
     private Context context;
     private List<Deck> decks;
     private DeckAdapter adapter;
+    private TextView tvNoDecks;
 
     public DeckFragment() {
         // Required empty public constructor
@@ -53,6 +55,10 @@ public class DeckFragment extends Fragment {
         final ImageView ivDeck = view.findViewById(R.id.ivDeck);
         Button btnDeck = view.findViewById(R.id.btnDeck);
         RecyclerView rvDeck = view.findViewById(R.id.rvDeck);
+        tvNoDecks = view.findViewById(R.id.tvNoDecks);
+
+        // Make no decks invisible
+        tvNoDecks.setVisibility(View.INVISIBLE);
 
         // Load data into views
         Glide.with(context).load("https://cdn1.dotesports.com/wp-content/uploads/2020/02/22021537/494815920e06ed9b01f27f4a03da4033.jpg").transform(new RoundedCorners(25)).into(ivDeck);
@@ -92,6 +98,11 @@ public class DeckFragment extends Fragment {
                     decks.addAll(itemList);
                     // Since we incremented card.count we have to let the adapter know so the view changes
                     adapter.notifyDataSetChanged();
+
+                    // Check if decks is empty; if it is make tvNoDecks visible
+                    if (decks.isEmpty()) {
+                        tvNoDecks.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
