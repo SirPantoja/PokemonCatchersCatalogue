@@ -3,7 +3,6 @@ package fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,15 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.codepath.asynchttpclient.AsyncHttpClient;
-import com.codepath.asynchttpclient.RequestParams;
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.pokemoncatcherscatalogue.NewDeckActivity;
-import com.example.pokemoncatcherscatalogue.ParseApplication;
 import com.example.pokemoncatcherscatalogue.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -38,7 +32,6 @@ import java.util.List;
 
 import adapters.DeckAdapter;
 import models.Deck;
-import models.ParseCard;
 
 public class DeckFragment extends Fragment {
 

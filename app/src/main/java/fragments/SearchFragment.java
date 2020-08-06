@@ -25,8 +25,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import adapters.CardAdapter;
 import models.Card;
@@ -54,7 +52,7 @@ public class SearchFragment extends Fragment {
         final EditText etSearch = view.findViewById(R.id.etSearch);
 
         // Initialize cards
-        cards = new ArrayList<Card>();
+        cards = new ArrayList<>();
         // Create new adapter for recycler view
         adapter = new CardAdapter(cards);
         // Set the adapter

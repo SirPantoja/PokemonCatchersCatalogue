@@ -1,7 +1,6 @@
 package fragments;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,11 +29,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import models.SetDao;
 import okhttp3.Headers;
@@ -60,6 +58,7 @@ public class SetFragment extends Fragment {
         context = getContext();
 
         // Set up the data access object
+        assert context != null;
         setDao = ((ParseApplication) context.getApplicationContext()).getMyDatabase().setDao();
 
         // Set up the Recycler View
@@ -90,7 +89,7 @@ public class SetFragment extends Fragment {
                 android.R.color.holo_red_light);
 
         // Query the database for existing set data
-        List<Set> newSets = new ArrayList<>();
+        List<Set> newSets;
         newSets = setDao.getAll();
         for (Set set : newSets) {
             Log.i(TAG, "Retrieving" + set.getName());
@@ -189,17 +188,16 @@ public class SetFragment extends Fragment {
                 titles.put(set.getSeries(), newList);
             } else {
                 // Already contains this series so just add it
-                titles.get(set.getSeries()).add(set);
+                Objects.requireNonNull(titles.get(set.getSeries())).add(set);
             }
         }
 
         // Getting an iterator
-        Iterator hmIterator = titles.entrySet().iterator();
 
         // Iterate through the hash map and add to the series object
-        while (hmIterator.hasNext()) {
-            Map.Entry mapElement = (Map.Entry)hmIterator.next();
-            series.add(new Series((String)mapElement.getKey(), (List)mapElement.getValue()));
+        for (Map.Entry<String, List<Set>> stringListEntry : titles.entrySet()) {
+            Map.Entry mapElement = (Map.Entry) stringListEntry;
+            series.add(new Series((String) mapElement.getKey(), (List) mapElement.getValue()));
         }
     }
 }

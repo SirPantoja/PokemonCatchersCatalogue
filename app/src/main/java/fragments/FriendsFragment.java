@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,17 +28,13 @@ import java.util.List;
 
 import adapters.FriendAdapter;
 import models.Friend;
-import models.ParseCard;
 
 public class FriendsFragment extends Fragment {
 
     public static final String TAG = "FriendsFragment";
-    private RecyclerView rvFriends;
     protected FriendAdapter adapter;
     protected List<Friend> friends;
     private EditText etFriendUsername;
-    private Button btnAdd;
-    private Context context;
 
 
     public FriendsFragment() {
@@ -49,15 +44,15 @@ public class FriendsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        context = getContext();
+        Context context = getContext();
 
         // Set up the Recycler View and other views
-        rvFriends = view.findViewById(R.id.rvFriends);
+        RecyclerView rvFriends = view.findViewById(R.id.rvFriends);
         etFriendUsername = view.findViewById(R.id.etFriendUsername);
-        btnAdd = view.findViewById(R.id.btnAdd);
+        Button btnAdd = view.findViewById(R.id.btnAdd);
 
         // Initialize the friends list
-        friends = new ArrayList<Friend>();
+        friends = new ArrayList<>();
         // Create the adapter and pass in friends
         adapter = new FriendAdapter(friends);
         // Attach the adapter to the recycler view
@@ -106,7 +101,6 @@ public class FriendsFragment extends Fragment {
                     if (objects.isEmpty()) {
                         // Error checking. Did not find user
                         Log.i(TAG, "Could not find user");
-                        return;
                     } else {
                         Log.i(TAG, "Added User");
                         ParseUser newFriendUser = objects.get(0);

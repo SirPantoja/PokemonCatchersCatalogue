@@ -28,25 +28,18 @@ import com.example.pokemoncatcherscatalogue.HomeActivity;
 import com.example.pokemoncatcherscatalogue.MainActivity;
 import com.example.pokemoncatcherscatalogue.ParseApplication;
 import com.example.pokemoncatcherscatalogue.R;
-import com.parse.Parse;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.File;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.pokemoncatcherscatalogue.CardDetailsActivity.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE;
 
 public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";
-    private Button btnLogout;
-    private Button btnUpdate;
-    private Button btnCamera;
-    private Button btnRevert;
     private ImageView ivProfile;
-    private TextView tvUsername;
     private EditText etBio;
     private Context context;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
@@ -63,12 +56,12 @@ public class ProfileFragment extends Fragment {
         context = getContext();
 
         // Link up views
-        btnLogout = view.findViewById(R.id.btnLogout);
-        btnUpdate = view.findViewById(R.id.btnUpdate);
-        btnCamera = view.findViewById(R.id.btnCamera);
-        btnRevert = view.findViewById(R.id.btnRevert);
+        Button btnLogout = view.findViewById(R.id.btnLogout);
+        Button btnUpdate = view.findViewById(R.id.btnUpdate);
+        Button btnCamera = view.findViewById(R.id.btnCamera);
+        Button btnRevert = view.findViewById(R.id.btnRevert);
         ivProfile = view.findViewById(R.id.ivProfile);
-        tvUsername = view.findViewById(R.id.tvUsername);
+        TextView tvUsername = view.findViewById(R.id.tvUsername);
         etBio = view.findViewById(R.id.tvBio);
 
         // Set on click listener for button logout
@@ -119,7 +112,7 @@ public class ProfileFragment extends Fragment {
         ParseUser user = ParseUser.getCurrentUser();
         tvUsername.setText(user.getUsername());
         etBio.setText(user.getString("bio"));
-        Glide.with(view).load(user.getParseFile("profilePic").getUrl()).into(ivProfile);
+        Glide.with(view).load(Objects.requireNonNull(user.getParseFile("profilePic")).getUrl()).into(ivProfile);
     }
 
     @Override
@@ -161,9 +154,8 @@ public class ProfileFragment extends Fragment {
         }
 
         // Return the file target for the photo based on filename
-        File file = new File(mediaStorageDir.getPath() + File.separator + photoFileName);
 
-        return file;
+        return new File(mediaStorageDir.getPath() + File.separator + photoFileName);
     }
 
     @Override
