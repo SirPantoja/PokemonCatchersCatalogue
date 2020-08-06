@@ -1,5 +1,6 @@
 package adapters;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Context;
 import android.os.Build;
@@ -8,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.pokemoncatcherscatalogue.NewDeckActivity;
 import com.example.pokemoncatcherscatalogue.R;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -42,6 +44,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         this.list = list;
     }
 
+    @NotNull
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(
@@ -49,6 +52,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         return new ListViewHolder(view);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(ListViewHolder holder, int position) {
         Log.i(TAG, list.get(position).getUrl());
@@ -65,6 +69,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         return list.size();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN && NewDeckActivity.scroll) {

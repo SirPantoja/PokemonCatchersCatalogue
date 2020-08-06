@@ -1,34 +1,14 @@
 package adapters;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
 import com.example.pokemoncatcherscatalogue.R;
 import com.example.pokemoncatcherscatalogue.SeriesViewHolder;
-import com.example.pokemoncatcherscatalogue.SetStatistics;
 import com.example.pokemoncatcherscatalogue.SetViewHolder;
-import com.example.pokemoncatcherscatalogue.SingleSetActivity;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 

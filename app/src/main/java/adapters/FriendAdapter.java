@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.pokemoncatcherscatalogue.HomeActivity;
 import com.example.pokemoncatcherscatalogue.ParseApplication;
 import com.example.pokemoncatcherscatalogue.R;
@@ -24,7 +23,6 @@ import com.parse.ParseException;
 
 import java.util.List;
 
-import fragments.SetFragment;
 import models.Friend;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
@@ -50,8 +48,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         View friendView = inflater.inflate(R.layout.friend_item, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(friendView);
-        return viewHolder;
+        return new ViewHolder(friendView);
     }
 
     @Override

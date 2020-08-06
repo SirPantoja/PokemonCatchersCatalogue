@@ -17,8 +17,6 @@ import com.bumptech.glide.Glide;
 import com.example.pokemoncatcherscatalogue.DeckViewActivity;
 import com.example.pokemoncatcherscatalogue.R;
 
-import org.parceler.Parcels;
-
 import java.util.List;
 
 import models.Deck;
