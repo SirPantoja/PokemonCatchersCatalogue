@@ -1,6 +1,5 @@
 package models;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -8,9 +7,6 @@ import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 import org.parceler.Parcel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Parcel
 @Entity
@@ -29,7 +25,6 @@ public class Card implements Comparable<Card> {
     public String name;
     @ColumnInfo
     @PrimaryKey
-    @NonNull
     public String id;                                    // Unique identifier for each card
     @ColumnInfo
     public String url;
@@ -64,7 +59,7 @@ public class Card implements Comparable<Card> {
     // Does a custom comparison based on the static member variable sort
     @Override
     public int compareTo(Card card) {
-        switch(card.sort) {
+        switch(sort) {
             case NUMBER:
                 return this.number - card.number;
             case TYPE:
