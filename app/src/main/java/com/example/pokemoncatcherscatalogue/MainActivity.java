@@ -1,7 +1,9 @@
 package com.example.pokemoncatcherscatalogue;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Play music
+        ((ParseApplication)this.getApplicationContext()).startMediaPlayer(R.raw.opening);
+
         // Persist the user across resets
         if (ParseUser.getCurrentUser() != null) {
             goHomeActivity();
@@ -38,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnLogin = findViewById(R.id.btnLogin);
         TextView tvSignUp = findViewById(R.id.tvSignUp);
         ImageView ivAppLogo = findViewById(R.id.ivAppLogo);
-        ImageView ivLogin = findViewById(R.id.ivLogin);
+        final ImageView ivLogin = findViewById(R.id.ivLogin);
 
         // Set up Login on click listener
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, CreateAccountActivity.class);
-                startActivity(intent);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, ivLogin, "TCG image");
+                MainActivity.this.startActivity(intent, options.toBundle());
             }
         });
 

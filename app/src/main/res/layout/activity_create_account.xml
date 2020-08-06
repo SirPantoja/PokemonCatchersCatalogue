@@ -76,6 +76,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="70dp"
         tools:srcCompat="@tools:sample/avatars"
+        android:transitionName="@string/tcg_image"
         android:contentDescription="@string/tcg_image" />
 
     <EditText
