@@ -16,12 +16,15 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
 import fragments.DeckFragment;
 import fragments.FriendsFragment;
 import fragments.ProfileFragment;
 import fragments.SearchFragment;
 import fragments.SetFragment;
-import models.SetDao;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -29,8 +32,6 @@ public class HomeActivity extends AppCompatActivity {
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
-    private NavigationView nvDrawer;
-    private SetDao setDao;
 
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
@@ -48,7 +49,7 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // This will display an Up icon (<-), we will replace it with hamburger later
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -59,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
         drawerToggle.syncState();
 
         // Find our drawer view
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
 
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
@@ -80,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NotNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
@@ -96,9 +97,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         try {
             fragmentManager.beginTransaction().replace(R.id.flContent, SetFragment.class.newInstance()).commit();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
     }
@@ -131,6 +130,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         // Insert the fragment by replacing any existing fragment
+        assert fragment != null;
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
         // Highlight the selected item has been done by NavigationView
@@ -144,10 +144,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawer.openDrawer(GravityCompat.START);
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            mDrawer.openDrawer(GravityCompat.START);
+            return true;
         }
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;

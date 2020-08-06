@@ -1,5 +1,6 @@
 package com.example.pokemoncatcherscatalogue;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -23,6 +24,7 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
         gestureDetector = new GestureDetector(c, new GestureListener());
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public boolean onTouch(final View view, final MotionEvent motionEvent) {
         return gestureDetector.onTouchEvent(motionEvent);
     }

@@ -2,7 +2,6 @@ package com.example.pokemoncatcherscatalogue;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
@@ -29,7 +27,6 @@ import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,23 +36,16 @@ import adapters.CardAdapter;
 import models.Card;
 import models.CardDao;
 import models.ParseCard;
-import models.Set;
 import okhttp3.Headers;
 
 public class SingleSetActivity extends AppCompatActivity {
 
     public static final String TAG = "SingleSetActivity";
-    private RecyclerView rvCards;
     private ArrayList<Card> cards;
     private CardAdapter adapter;
-    private ToggleButton btnEditToggle;
-    private Spinner spinnerSort;
     private boolean check = false;          // Because of a spinner patch https://stackoverflow.com/questions/13397933/android-spinner-avoid-onitemselected-calls-during-initialization
     public static boolean isChecked = false;
     private CardDao cardDao;
-    private String logoUrl;
-    private ImageView ivSingleLogo;
-    private TextView tvEditMode;
     private ProgressBar pbLoadingSingleSet;
 
 
@@ -73,11 +63,11 @@ public class SingleSetActivity extends AppCompatActivity {
         String logoUrl = intent.getStringExtra("logo");
 
         // Link up views
-        rvCards = findViewById(R.id.rvCards);
-        btnEditToggle = findViewById(R.id.btnEditToggle);
-        spinnerSort = findViewById(R.id.spinnerSort);
-        ivSingleLogo = findViewById(R.id.ivSingleLogo);
-        tvEditMode = findViewById(R.id.tvEditMode);
+        RecyclerView rvCards = findViewById(R.id.rvCards);
+        ToggleButton btnEditToggle = findViewById(R.id.btnEditToggle);
+        Spinner spinnerSort = findViewById(R.id.spinnerSort);
+        ImageView ivSingleLogo = findViewById(R.id.ivSingleLogo);
+        TextView tvEditMode = findViewById(R.id.tvEditMode);
         pbLoadingSingleSet = findViewById(R.id.pbLoadingSingleSet);
 
         // If not privileged hide UI
@@ -151,7 +141,7 @@ public class SingleSetActivity extends AppCompatActivity {
         rvCards.setLayoutManager(new GridLayoutManager(this, 3));
 
         // Query the database for existing card data
-        List<Card> newCards = new ArrayList<>();
+        List<Card> newCards;
         newCards = cardDao.getAll(setCode);
         for (Card card : newCards) {
             Log.i(TAG, "Retrieving" + card.name);

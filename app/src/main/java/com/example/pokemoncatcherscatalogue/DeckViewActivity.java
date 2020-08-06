@@ -13,13 +13,10 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import adapters.ListAdapter;
-import models.Card;
 import models.Deck;
 import models.ParseCard;
 
@@ -44,15 +41,14 @@ public class DeckViewActivity extends AppCompatActivity {
         // Get intent data
         Intent intent = getIntent();
         String deckName = intent.getStringExtra("deckName");
-        String createdAt = intent.getStringExtra("createdAt");
         Log.i(TAG, "Got deck name: " + deckName);
 
         // Set scroll to false
         NewDeckActivity.scroll = false;
-        getDeck(deckName, createdAt);
+        getDeck(deckName);
     }
 
-    private void getDeck(String deckName, String createdAt) {
+    private void getDeck(String deckName) {
         // Make the parse query and then update the adapter's data set
         ParseQuery<Deck> query = ParseQuery.getQuery(Deck.class);
         ParseUser user = ParseUser.getCurrentUser();

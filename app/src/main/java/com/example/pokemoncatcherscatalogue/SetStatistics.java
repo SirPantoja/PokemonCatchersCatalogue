@@ -41,13 +41,10 @@ public class SetStatistics extends AppCompatActivity {
 
     public static final String TAG = "SetStatistics";
     private String setCode;
-    private RecyclerView rlCards;
-    private ArrayList<Card> cards;
     private ArrayList<Integer> stats;
-    private HashMap<String, Card> cardsHash = new HashMap<String, Card>();
+    private HashMap<String, Card> cardsHash = new HashMap<>();
     private MissingCardAdapter adapter;
     private ProgressBar pbSetStatistics;
-    private int totalCards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +55,10 @@ public class SetStatistics extends AppCompatActivity {
         Intent intent = getIntent();
         setCode = intent.getStringExtra("code");
         String logoUrl = intent.getStringExtra("logo");
-        String symbolUrl = intent.getStringExtra("symbol");
         String setName = intent.getStringExtra("name");
-        totalCards = intent.getIntExtra("total", 0);
 
         // Parse the setName if needed
+        assert setName != null;
         if (setName.length() >= 20) {
             setName = setName.substring(0, Math.min(setName.length(), 20)) + "...";
         }
@@ -70,12 +66,12 @@ public class SetStatistics extends AppCompatActivity {
         // Link up views
         ImageView ivSetLogo = findViewById(R.id.ivSymbol);
         TextView tvSetName = findViewById(R.id.tvSetName);
-        rlCards = findViewById(R.id.rlCards);
+        RecyclerView rlCards = findViewById(R.id.rlCards);
         pbSetStatistics = findViewById(R.id.pbSetStatistics);
 
         // Set up cards and stats
-        cards = new ArrayList<Card>();
-        stats = new ArrayList<Integer>();
+        ArrayList<Card> cards = new ArrayList<>();
+        stats = new ArrayList<>();
         // Create the adapter
         adapter = new MissingCardAdapter(cards, stats);
         // Set the adapter to rlCards
@@ -85,14 +81,14 @@ public class SetStatistics extends AppCompatActivity {
 
         // get the cards to populate the recycler view and start up the progress bar
         pbSetStatistics.setVisibility(View.VISIBLE);
-        getCards(cards);
+        getCards();
 
         // Add content to views
         Glide.with(this).load(logoUrl).into(ivSetLogo);
         tvSetName.setText(setName);
     }
 
-    private void getCards(final ArrayList<Card> cards) {
+    private void getCards() {
         // Set up for the API request
         AsyncHttpClient client = ((ParseApplication) this.getApplicationContext()).getClient();
         RequestParams params = new RequestParams();

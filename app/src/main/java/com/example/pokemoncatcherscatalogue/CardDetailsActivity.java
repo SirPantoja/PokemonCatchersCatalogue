@@ -5,8 +5,6 @@ import androidx.core.content.FileProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -201,7 +199,7 @@ public class CardDetailsActivity extends AppCompatActivity {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
-                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                // Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 // Create a ParseFile and upload it to Parse
                 ParseFile parseFile = new ParseFile(photoFile);
                 putPhoto(parseFile);
