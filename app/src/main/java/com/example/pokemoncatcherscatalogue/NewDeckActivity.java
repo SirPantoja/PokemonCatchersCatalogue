@@ -13,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -38,6 +39,7 @@ public class NewDeckActivity extends AppCompatActivity implements Listener {
     private List<ParseCard> cards;
     private ListAdapter userCardsAdapter;
     public static boolean scroll = true;
+    private TextView tvNoCards1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +49,15 @@ public class NewDeckActivity extends AppCompatActivity implements Listener {
         Toast.makeText(this, "Drag cards down to add to your deck", Toast.LENGTH_SHORT).show();
 
         // Link up views
+        tvNoCards1 = findViewById(R.id.tvNoCards1);
         Switch switchScroll = findViewById(R.id.switch1);
         ImageView ivDeckLogo = findViewById(R.id.ivDeckLogo);
         ImageView ivProfileDeck = findViewById(R.id.ivProfileDeck);
         Button btnSaveDeck = findViewById(R.id.btnSaveDeck);
         final EditText etDeckName = findViewById(R.id.etDeckName);
+
+        // Set the texts to invisible
+        tvNoCards1.setVisibility(View.INVISIBLE);
 
         // Load the image with Glide
         Glide.with(this).load("https://cdn1.dotesports.com/wp-content/uploads/2020/02/22021537/494815920e06ed9b01f27f4a03da4033.jpg").transform(new RoundedCorners(40)).into(ivDeckLogo);
@@ -135,6 +141,11 @@ public class NewDeckActivity extends AppCompatActivity implements Listener {
                             cards.add(new ParseCard(card));
                         }
                     }
+                }
+
+                // Check if cards is empty, for if it is, we must set the text to visible
+                if (cards.isEmpty()) {
+                    tvNoCards1.setVisibility(View.VISIBLE);
                 }
                 userCardsAdapter.notifyDataSetChanged();
             }

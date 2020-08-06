@@ -56,4 +56,7 @@
     <string name="pokeball">pokeball</string>
     <string name="no_decks_to_show">No decks to show...</string>
     <string name="delete_deck">Delete Deck</string>
+    <string name="no_cards_placed_in_deck_yet">No cards placed in deck yet...</string>
+    <string name="no_cards_to_show">No cards to show...</string>
+    <string name="deck_name">Deck Name</string>
 </resources>
