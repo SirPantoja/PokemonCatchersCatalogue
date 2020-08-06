@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -29,6 +30,7 @@ public class Set implements Parcelable {
     // Default empty constructor
     public Set() { }
 
+    @Ignore
     public Set(String name, String logoUrl, String symbolUrl, String code, int totalCards, String series) {
         this.name = name;
         this.logoUrl = logoUrl;
