@@ -146,6 +146,5 @@ Card Parse object
 |count|int|tells how many of this card are owned|
 
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+- https://api.pokemontcg.io/<version>/<resource>
+  This is the endpoint to access the pokemon tcg database
